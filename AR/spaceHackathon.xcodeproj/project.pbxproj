@@ -11,6 +11,7 @@
 		320EBFD620471BCB00EDA8C7 /* mars.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 320EBFD520471BCB00EDA8C7 /* mars.jpg */; };
 		320EBFD8204723A200EDA8C7 /* SCNVector3+MathUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320EBFD7204723A200EDA8C7 /* SCNVector3+MathUtils.swift */; };
 		320EBFDA2047282700EDA8C7 /* RobotInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320EBFD92047282700EDA8C7 /* RobotInterface.swift */; };
+		613D3A6E204752C600783D35 /* rover.dae in Resources */ = {isa = PBXBuildFile; fileRef = 613D3A6D204752C600783D35 /* rover.dae */; };
 		61BD03F02046D115007EAAE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD03EF2046D115007EAAE9 /* AppDelegate.swift */; };
 		61BD03F22046D115007EAAE9 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 61BD03F12046D115007EAAE9 /* art.scnassets */; };
 		61BD03F42046D115007EAAE9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD03F32046D115007EAAE9 /* ViewController.swift */; };
@@ -35,6 +36,7 @@
 		320EBFD520471BCB00EDA8C7 /* mars.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mars.jpg; sourceTree = "<group>"; };
 		320EBFD7204723A200EDA8C7 /* SCNVector3+MathUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+MathUtils.swift"; sourceTree = "<group>"; };
 		320EBFD92047282700EDA8C7 /* RobotInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotInterface.swift; sourceTree = "<group>"; };
+		613D3A6D204752C600783D35 /* rover.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = rover.dae; path = ../../../../Downloads/rover/rover.dae; sourceTree = "<group>"; };
 		61BD03EC2046D115007EAAE9 /* spaceHackathon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spaceHackathon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BD03EF2046D115007EAAE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		61BD03F12046D115007EAAE9 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				61BD03F82046D117007EAAE9 /* Assets.xcassets */,
 				61BD03FA2046D117007EAAE9 /* LaunchScreen.storyboard */,
 				320EBFD520471BCB00EDA8C7 /* mars.jpg */,
+				613D3A6D204752C600783D35 /* rover.dae */,
 				320EBFD32047146200EDA8C7 /* car.dae */,
 				61BD03FD2046D117007EAAE9 /* Info.plist */,
 				320EBFD7204723A200EDA8C7 /* SCNVector3+MathUtils.swift */,
@@ -196,6 +199,7 @@
 				61BD03FC2046D117007EAAE9 /* LaunchScreen.storyboard in Resources */,
 				61BD03F92046D117007EAAE9 /* Assets.xcassets in Resources */,
 				320EBFD42047146200EDA8C7 /* car.dae in Resources */,
+				613D3A6E204752C600783D35 /* rover.dae in Resources */,
 				320EBFD620471BCB00EDA8C7 /* mars.jpg in Resources */,
 				61BD03F72046D115007EAAE9 /* Main.storyboard in Resources */,
 			);
