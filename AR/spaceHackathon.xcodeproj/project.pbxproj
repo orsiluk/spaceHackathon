@@ -10,6 +10,7 @@
 		320EBFD42047146200EDA8C7 /* car.dae in Resources */ = {isa = PBXBuildFile; fileRef = 320EBFD32047146200EDA8C7 /* car.dae */; };
 		320EBFD620471BCB00EDA8C7 /* mars.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 320EBFD520471BCB00EDA8C7 /* mars.jpg */; };
 		320EBFD8204723A200EDA8C7 /* SCNVector3+MathUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320EBFD7204723A200EDA8C7 /* SCNVector3+MathUtils.swift */; };
+		320EBFDA2047282700EDA8C7 /* RobotInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320EBFD92047282700EDA8C7 /* RobotInterface.swift */; };
 		61BD03F02046D115007EAAE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD03EF2046D115007EAAE9 /* AppDelegate.swift */; };
 		61BD03F22046D115007EAAE9 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 61BD03F12046D115007EAAE9 /* art.scnassets */; };
 		61BD03F42046D115007EAAE9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD03F32046D115007EAAE9 /* ViewController.swift */; };
@@ -33,6 +34,7 @@
 		320EBFD32047146200EDA8C7 /* car.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = car.dae; sourceTree = "<group>"; };
 		320EBFD520471BCB00EDA8C7 /* mars.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mars.jpg; sourceTree = "<group>"; };
 		320EBFD7204723A200EDA8C7 /* SCNVector3+MathUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+MathUtils.swift"; sourceTree = "<group>"; };
+		320EBFD92047282700EDA8C7 /* RobotInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotInterface.swift; sourceTree = "<group>"; };
 		61BD03EC2046D115007EAAE9 /* spaceHackathon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spaceHackathon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BD03EF2046D115007EAAE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		61BD03F12046D115007EAAE9 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				320EBFD32047146200EDA8C7 /* car.dae */,
 				61BD03FD2046D117007EAAE9 /* Info.plist */,
 				320EBFD7204723A200EDA8C7 /* SCNVector3+MathUtils.swift */,
+				320EBFD92047282700EDA8C7 /* RobotInterface.swift */,
 			);
 			path = spaceHackathon;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 			files = (
 				61BD03F42046D115007EAAE9 /* ViewController.swift in Sources */,
 				320EBFD8204723A200EDA8C7 /* SCNVector3+MathUtils.swift in Sources */,
+				320EBFDA2047282700EDA8C7 /* RobotInterface.swift in Sources */,
 				61BD03F02046D115007EAAE9 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
