@@ -22,12 +22,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
     
+    
     var pointList: [SCNVector3] = []
     var loadcar: Bool = true
     var carObject = SCNNode()
     var angle : Float = 0.0
     
-   
+    lazy var statusViewController: StatusViewController = {
+        return childViewControllers.lazy.flatMap({ $0 as? StatusViewController }).first!
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,6 +49,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.autoenablesDefaultLighting = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(tappedOnScreen(recognizer:)))
         self.sceneView.addGestureRecognizer(tap)
+        
+        statusViewController.restartExperienceHandler = { [unowned self] in
+            print("Done pressed")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -144,8 +152,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             let targetNode = SCNNode(geometry: target)
             
 
-            let move = SCNAction.move(to: boxNode.position, duration: 1.5)
-            let animSequence = SCNAction.sequence([move])
             let pointTarget = pointList[index] + pointList[index] - carObject.position
             targetNode.position = pointTarget
             
