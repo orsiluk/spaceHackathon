@@ -419,6 +419,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\robot\NKH.MindSqualls\NKH.MindSqualls.csproj">
+      <Project>{9973018e-fc09-4549-a484-0b702ade1ee9}</Project>
+      <Name>NKH.MindSqualls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\robot\NKH.MindSqualls\WinUsbWrapper\WinUsbWrapper.csproj">
+      <Project>{40c6e946-d5ac-43b8-aede-d896e9cbb3e2}</Project>
+      <Name>WinUsbWrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\robot\sat_comms\sat_comms.csproj">
+      <Project>{a301c8e8-e3eb-482c-882e-5b274395fed5}</Project>
+      <Name>sat_comms</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
