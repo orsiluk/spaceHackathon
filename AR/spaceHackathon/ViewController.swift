@@ -209,6 +209,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the scene to the view
         sceneView.scene = scene
+        sceneView.autoenablesDefaultLighting = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(tappedOnScreen(recognizer:)))
         self.sceneView.addGestureRecognizer(tap)
     }
@@ -278,7 +279,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             // let angle = carObject.position.angleBetweenVectors(boxNode.position)
         
             let box2 = SCNSphere(radius: 0.0002)
-            let boxNode2 = SCNNode(geometry: box)
+            let boxNode2 = SCNNode(geometry: box2)
 
             
 
@@ -287,12 +288,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
 
             let move = SCNAction.move(to: boxNode.position, duration: 1.5)
-            let animSequence = SCNAction.sequence([ move])
+            let animSequence = SCNAction.sequence([move])
             
             
             let lookAt = SCNLookAtConstraint(target: boxNode2)
             
             carObject.constraints = [lookAt]
+//            let howMuch = SCNVector4Make(1, 0, 0, Float.pi/2)
+//            carObject.rotate(by: howMuch, aroundTarget: carObject.position)
             carObject.runAction(animSequence)
             
             let lineNode = addLine(pos1: boxNode.position, pos2:currentPosition)
@@ -375,15 +378,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         plane.materials = [lavaMaterial]
         
         let planeNode = SCNNode(geometry: plane)
-        planeNode.position = SCNVector3Make(anchor.center.x, 0, anchor.center.z)
+        planeNode.position = SCNVector3Make(anchor.center.x, 0 , anchor.center.z)
         planeNode.transform = SCNMatrix4MakeRotation(-Float.pi / 2, 1, 0, 0)
-//        planeNode.opacity = 0.2
+        planeNode.opacity = 0.5
         return planeNode
     }
     
     func addCar(x: Float = 0, y: Float = 0, z: Float = 0) -> SCNNode {
         // if object found return it, else draw a red circle
-        guard let carScene = SCNScene(named: "car.dae") else {
+        guard let carScene = SCNScene(named: "rover.dae") else {
             print("Object not found!")
             return self.addObject(color: "red", x: x, y: y, z: z+0.8) }
         let carNode = SCNNode()
@@ -394,8 +397,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         
         carNode.position = SCNVector3(x, y, z)
-        carNode.scale = SCNVector3(0.2, 0.2, 0.2)
-//        carNode.eulerAngles.x = -.pi / 2
+        carNode.scale = SCNVector3(0.05, 0.05, 0.05)
+//        carNode.eulerAngles.y = -.pi / 2
         return carNode
     }
     
