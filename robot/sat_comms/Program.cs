@@ -8,7 +8,7 @@ namespace sat_comms
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             ISU isu = null;
 
@@ -30,11 +30,11 @@ namespace sat_comms
                 while(messagesRemaining)
                 {
                     var result = isu.SendAndReceiveMessage();
-                    if (result.Item1 != null)
+                    if (result.Message != null)
                     {
-                        Console.WriteLine("Received message: " + result.Item1);
+                        Console.WriteLine("Received message: " + result.Message);
                     }
-                    messagesRemaining = result.Item4 > 0;
+                    messagesRemaining = result.MessagesRemaining > 0;
                 }
 
                 // Use to send a message: var result = isu.SendAndReceiveMessage("My message");
@@ -47,10 +47,7 @@ namespace sat_comms
             }
             finally
             {
-                if (isu != null)
-                {
-                    isu.Close();
-                }
+                isu?.Close();
 
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
