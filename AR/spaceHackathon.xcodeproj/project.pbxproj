@@ -12,6 +12,7 @@
 		320EBFD8204723A200EDA8C7 /* SCNVector3+MathUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320EBFD7204723A200EDA8C7 /* SCNVector3+MathUtils.swift */; };
 		320EBFDA2047282700EDA8C7 /* RobotInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320EBFD92047282700EDA8C7 /* RobotInterface.swift */; };
 		613D3A6E204752C600783D35 /* rover.dae in Resources */ = {isa = PBXBuildFile; fileRef = 613D3A6D204752C600783D35 /* rover.dae */; };
+		613D3AA52047611800783D35 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613D3AA42047611700783D35 /* StatusViewController.swift */; };
 		61BD03F02046D115007EAAE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD03EF2046D115007EAAE9 /* AppDelegate.swift */; };
 		61BD03F22046D115007EAAE9 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 61BD03F12046D115007EAAE9 /* art.scnassets */; };
 		61BD03F42046D115007EAAE9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD03F32046D115007EAAE9 /* ViewController.swift */; };
@@ -37,6 +38,7 @@
 		320EBFD92047282700EDA8C7 /* RobotInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RobotInterface.swift; sourceTree = "<group>"; };
 		613D3A6D204752C600783D35 /* rover.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = rover.dae; path = ../../../../Downloads/rover/rover.dae; sourceTree = "<group>"; };
 		613D3A71204755DA00783D35 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Main.storyboard; path = /Users/lukacs_orsi/Desktop/spaceHackathon/AR/spaceHackathon/Main.storyboard; sourceTree = "<absolute>"; };
+		613D3AA42047611700783D35 /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 		61BD03EC2046D115007EAAE9 /* spaceHackathon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spaceHackathon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BD03EF2046D115007EAAE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		61BD03F12046D115007EAAE9 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				61BD03EF2046D115007EAAE9 /* AppDelegate.swift */,
 				61BD03F12046D115007EAAE9 /* art.scnassets */,
 				61BD03F32046D115007EAAE9 /* ViewController.swift */,
+				613D3AA42047611700783D35 /* StatusViewController.swift */,
 				613D3A71204755DA00783D35 /* Main.storyboard */,
 				61BD03F82046D117007EAAE9 /* Assets.xcassets */,
 				61BD03FA2046D117007EAAE9 /* LaunchScreen.storyboard */,
@@ -221,6 +224,7 @@
 				320EBFD8204723A200EDA8C7 /* SCNVector3+MathUtils.swift in Sources */,
 				320EBFDA2047282700EDA8C7 /* RobotInterface.swift in Sources */,
 				61BD03F02046D115007EAAE9 /* AppDelegate.swift in Sources */,
+				613D3AA52047611800783D35 /* StatusViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
