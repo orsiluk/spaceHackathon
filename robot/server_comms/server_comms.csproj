@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A301C8E8-E3EB-482C-882E-5B274395FED5}</ProjectGuid>
+    <ProjectGuid>{93A362C3-6E3E-47E5-9432-C4A43936821C}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>sat_comms</RootNamespace>
-    <AssemblyName>sat_comms</AssemblyName>
+    <RootNamespace>server_comms</RootNamespace>
+    <AssemblyName>server_comms</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ISU.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
