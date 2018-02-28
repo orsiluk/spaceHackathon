@@ -52,6 +52,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         statusViewController.restartExperienceHandler = { [unowned self] in
             print("Done pressed")
+            self.visualisePath()
         }
     }
     
@@ -112,30 +113,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             self.sceneView.scene.rootNode.addChildNode(boxNode)
             
             pointList.append(boxNode.position)
-            
-            let count = pointList.count
-            if (count > 1){
-                let angle = calculateAngle(pos1: pointList[count-1], pos2: pointList[count-2])
-                print("Angle")
-                print(angle)
-                
-                let and =  CGFloat(angle)
-                
-                let move = SCNAction.move(to: pointList[count-1], duration: 1.5)
-                
-                
-                var yRot = CGFloat(carObject.rotation.y)
-                
-                print("yrot")
-                print(yRot)
-                
-                
-                let rot = SCNAction.rotateTo(x: 0, y: and, z: 0, duration: 0.5)
-                
-                let animSequence = SCNAction.sequence([rot, move])
-                carObject.runAction(animSequence)
-                
-            }
+        
             
 
         }
@@ -160,7 +138,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             angle = angle + 2 * (Float.pi);
         }
 
-        
         return angle
         
     }
@@ -176,37 +153,38 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
-    func visualisePath(pointList: [SCNVector3]){
+    func visualisePath(){
         
         let pointCount = pointList.count
+        var animList: [SCNAction] = []
         
+        //let carObject = addCar(x: pointList[0].x, y:pointList[0].y, z: pointList[0].z)
         
-        let carObject = addCar(x: pointList[0].x, y:pointList[0].y, z: pointList[0].z)
-        
-        self.sceneView.scene.rootNode.addChildNode(carObject)
         
         for index in 1...pointCount-1{
-
-            // let angle = carObject.position.angleBetweenVectors(boxNode.position)
             
-            let target = SCNSphere(radius: 0.0002)
-            let targetNode = SCNNode(geometry: target)
+            print("Vis path")
+            print(index)
             
-
-            let pointTarget = pointList[index] + pointList[index] - carObject.position
-            targetNode.position = pointTarget
+            let angle = calculateAngle(pos1: pointList[index], pos2: pointList[index-1])
             
+            let and =  CGFloat(angle)
+            var yRot = CGFloat(carObject.rotation.y)
+            
+            print("yrot")
+            print(yRot)
+            print(pointList[index])
             let move = SCNAction.move(to: pointList[index], duration: 1.5)
-            let animSequence = SCNAction.sequence([ move])
+            let rot = SCNAction.rotateTo(x: 0, y: and, z: 0, duration: 0.5)
+            animList.append(rot)
+            animList.append(move)
             
-            let lookAt = SCNLookAtConstraint(target: targetNode)
-            
-            carObject.constraints = [lookAt]
-//            let howMuch = SCNVector4Make(1, 0, 0, Float.pi/2)
-//            carObject.rotate(by: howMuch, aroundTarget: carObject.position)
-            carObject.runAction(animSequence)
             
         }
+        let animSequence = SCNAction.sequence(animList)
+
+        
+        carObject.runAction(animSequence)
     }
     
     
