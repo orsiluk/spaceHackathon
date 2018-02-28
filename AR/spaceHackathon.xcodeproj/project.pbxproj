@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		320EBFD42047146200EDA8C7 /* car.dae in Resources */ = {isa = PBXBuildFile; fileRef = 320EBFD32047146200EDA8C7 /* car.dae */; };
+		320EBFD620471BCB00EDA8C7 /* mars.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 320EBFD520471BCB00EDA8C7 /* mars.jpg */; };
 		61BD03F02046D115007EAAE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD03EF2046D115007EAAE9 /* AppDelegate.swift */; };
 		61BD03F22046D115007EAAE9 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 61BD03F12046D115007EAAE9 /* art.scnassets */; };
 		61BD03F42046D115007EAAE9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD03F32046D115007EAAE9 /* ViewController.swift */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		320EBFD32047146200EDA8C7 /* car.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = car.dae; sourceTree = "<group>"; };
+		320EBFD520471BCB00EDA8C7 /* mars.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mars.jpg; sourceTree = "<group>"; };
 		61BD03EC2046D115007EAAE9 /* spaceHackathon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spaceHackathon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BD03EF2046D115007EAAE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		61BD03F12046D115007EAAE9 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				61BD03F52046D115007EAAE9 /* Main.storyboard */,
 				61BD03F82046D117007EAAE9 /* Assets.xcassets */,
 				61BD03FA2046D117007EAAE9 /* LaunchScreen.storyboard */,
+				320EBFD520471BCB00EDA8C7 /* mars.jpg */,
 				320EBFD32047146200EDA8C7 /* car.dae */,
 				61BD03FD2046D117007EAAE9 /* Info.plist */,
 			);
@@ -187,6 +190,7 @@
 				61BD03FC2046D117007EAAE9 /* LaunchScreen.storyboard in Resources */,
 				61BD03F92046D117007EAAE9 /* Assets.xcassets in Resources */,
 				320EBFD42047146200EDA8C7 /* car.dae in Resources */,
+				320EBFD620471BCB00EDA8C7 /* mars.jpg in Resources */,
 				61BD03F72046D115007EAAE9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
