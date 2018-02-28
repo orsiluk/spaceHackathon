@@ -192,7 +192,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var pointList: [SCNVector3] = []
     var loadcar: Bool = true
     var carObject = SCNNode()
+    var angle : Float = 0.0
     
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -254,7 +256,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             pointList.append(carObject.position)
             loadcar = false
         } else {
-            let box = SCNSphere(radius: 0.02)
+            let box = SCNSphere(radius: 0.01)
             let boxNode = SCNNode(geometry: box)
             
             //        boxNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.dynamic, shape: SCNPhysicsShape(geometry: box, options: nil))
@@ -264,6 +266,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
             boxNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
             boxNode.position = SCNVector3Make(x, y, z)
+            
             self.sceneView.scene.rootNode.addChildNode(boxNode)
             
             let count = pointList.count
@@ -272,13 +275,24 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
             
             
-            let angle = atan2(1, 0) - atan2(boxNode.position.y-currentPosition.y, boxNode.position.x-currentPosition.x);
-            
-            let rotate = SCNAction.rotateTo(x:0, y: CGFloat(angle), z: 0, duration: 0.5)
-            let move = SCNAction.move(to: boxNode.position, duration: 1.5)
-            let animSequence = SCNAction.sequence([rotate, move])
-            
+            // let angle = carObject.position.angleBetweenVectors(boxNode.position)
         
+            let box2 = SCNSphere(radius: 0.0002)
+            let boxNode2 = SCNNode(geometry: box)
+
+            
+
+            let pointTarget = boxNode.position + boxNode.position - currentPosition
+            boxNode2.position = pointTarget
+            
+
+            let move = SCNAction.move(to: boxNode.position, duration: 1.5)
+            let animSequence = SCNAction.sequence([ move])
+            
+            
+            let lookAt = SCNLookAtConstraint(target: boxNode2)
+            
+            carObject.constraints = [lookAt]
             carObject.runAction(animSequence)
             
             let lineNode = addLine(pos1: boxNode.position, pos2:currentPosition)
