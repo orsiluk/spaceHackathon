@@ -57,7 +57,11 @@ namespace RoverServer.Controllers
             }
             
             commandList.Add(command);
-            JobManager.AddJob(() => telemetry.TrackEvent("My New Event"), (s) => s.ToRunOnceIn(5).Seconds());
+            JobManager.AddJob(() =>
+            {
+                telemetry.TrackEvent("Sending message to RockBlock");
+
+            }, (s) => s.ToRunOnceIn(5).Seconds());
             return true;
         }
 

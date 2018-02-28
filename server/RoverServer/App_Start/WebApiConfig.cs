@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Http;
 using NSwag.SwaggerGeneration.WebApi;
 using RoverServer.Controllers;
+using RoverServer.RockBlock;
 
 namespace RoverServer
 {
@@ -27,7 +28,7 @@ namespace RoverServer
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.Properties.TryAdd("CommandQueue", new ConcurrentQueue<Command>());
+            config.Properties.TryAdd("RockBlockClient", new LiveRockBlockClient("1234", "myusername", "mypassword"));
             config.Properties.TryAdd("CommandList", new List<Command>());
         }
     }
