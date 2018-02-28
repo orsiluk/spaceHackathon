@@ -367,7 +367,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let plane = SCNBox(width: CGFloat(anchor.extent.x), height: CGFloat(anchor.extent.z), length: 0.02 , chamferRadius: 0)
         
         // SCNPlane(width: CGFloat(anchor.extent.x), height: CGFloat(anchor.extent.z))
-        let lavaImage = UIImage(named: "lava")
+        let lavaImage = UIImage(named: "mars")
         let lavaMaterial = SCNMaterial()
         lavaMaterial.diffuse.contents = lavaImage
         lavaMaterial.isDoubleSided = true
@@ -377,7 +377,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let planeNode = SCNNode(geometry: plane)
         planeNode.position = SCNVector3Make(anchor.center.x, 0, anchor.center.z)
         planeNode.transform = SCNMatrix4MakeRotation(-Float.pi / 2, 1, 0, 0)
-        planeNode.opacity = 0.2
+//        planeNode.opacity = 0.2
         return planeNode
     }
     
