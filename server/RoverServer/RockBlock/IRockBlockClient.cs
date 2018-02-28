@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RoverServer.Controllers;
 
 namespace RoverServer.RockBlock
 {
@@ -16,5 +12,6 @@ namespace RoverServer.RockBlock
     interface IRockBlockClient
     {
         RockBlockResult SendMessage(string data);
+        RockBlockResult SendCommand(Command data);
     }
 }
