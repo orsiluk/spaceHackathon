@@ -26,9 +26,9 @@ public class MarsMapper : MonoBehaviour
 	public void updateTiles(Vector3 roverLocation)
 	{
 		Vector2 roverTile = new Vector2((int)roverLocation.x/10, (int)roverLocation.z/10);
-		for (int x = -1; x < 2; x++)
+		for (int x = -2; x < 3; x++)
 		{
-			for (int y = -1; y < 2; y++)
+			for (int y = -2; y < 3; y++)
 			{
 				Vector2 tile = roverTile + new Vector2(x,y);
 				if (!downloaded_tiles.Contains(tile))
@@ -53,5 +53,6 @@ public class MarsMapper : MonoBehaviour
 		Renderer rend = tile.GetComponent<Renderer>();
 		rend.material = new Material(tileShader);
 		rend.material.mainTexture = texture;
+		rend.material.SetTexture("_BumpMap", texture);
 	}
 }

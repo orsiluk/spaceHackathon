@@ -12,10 +12,15 @@ public class MarsRover : MonoBehaviour
 	public ParticleSystem flamethrower;
 	public MarsMapper mapper;
 	public Communicator communicator;
+	private Vector3 cameraOffset;
+	private float cameraHeight = 0;
+	public Camera mainCamera;
 	// Use this for initialization
 	void Start ()
 	{
 		StartCoroutine(updateWorld());
+		cameraOffset = mainCamera.transform.position - transform.position;
+		cameraHeight = mainCamera.transform.position.y;
 	}
 	
 	// Update is called once per frame
@@ -29,6 +34,10 @@ public class MarsRover : MonoBehaviour
 		{
 			flamethrower.gameObject.active = false;
 		}
+
+		Vector3 cameraPosition = transform.position + cameraOffset;
+		cameraPosition.y = cameraHeight;
+		mainCamera.transform.position = cameraPosition;
 	}
 
 	public void MoveTo(Vector3 target)
