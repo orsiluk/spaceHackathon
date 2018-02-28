@@ -269,34 +269,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
             self.sceneView.scene.rootNode.addChildNode(boxNode)
             
-            let count = pointList.count
-            let currentPosition = pointList[count-1]
-            
-            
-            
-            
-            // let angle = carObject.position.angleBetweenVectors(boxNode.position)
-        
-            let box2 = SCNSphere(radius: 0.0002)
-            let boxNode2 = SCNNode(geometry: box)
-
-            
-
-            let pointTarget = boxNode.position + boxNode.position - currentPosition
-            boxNode2.position = pointTarget
-            
-
-            let move = SCNAction.move(to: boxNode.position, duration: 1.5)
-            let animSequence = SCNAction.sequence([ move])
-            
-            
-            let lookAt = SCNLookAtConstraint(target: boxNode2)
-            
-            carObject.constraints = [lookAt]
-            carObject.runAction(animSequence)
-            
-            let lineNode = addLine(pos1: boxNode.position, pos2:currentPosition)
-            self.sceneView.scene.rootNode.addChildNode(lineNode)
             pointList.append(boxNode.position)
 
         }
@@ -304,7 +276,52 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
     }
     
+    func executeStage(pos1:SCNVector3,pos2:SCNVector3)  {
+        
+    }
     
+    
+    
+    func executePath(pointList: [SCNVector3]){
+        
+        let pointCount = pointList.count
+        
+        for index in 0...pointCount-1{
+            executeStage(pos1: pointList[index], pos2: pointList[index+1])
+        }
+    }
+    
+    func visualisePath(pointList: [SCNVector3]){
+        
+        let pointCount = pointList.count
+        
+        
+        let carObject = addCar(x: pointList[0].x, y:pointList[0].y, z: pointList[0].z)
+        
+        self.sceneView.scene.rootNode.addChildNode(carObject)
+        
+        for index in 1...pointCount-1{
+
+            // let angle = carObject.position.angleBetweenVectors(boxNode.position)
+            
+            let target = SCNSphere(radius: 0.0002)
+            let targetNode = SCNNode(geometry: target)
+            
+            
+            
+            let pointTarget = pointList[index] + pointList[index] - carObject.position
+            targetNode.position = pointTarget
+            
+            let move = SCNAction.move(to: pointList[index], duration: 1.5)
+            let animSequence = SCNAction.sequence([ move])
+            
+            let lookAt = SCNLookAtConstraint(target: targetNode)
+            
+            carObject.constraints = [lookAt]
+            carObject.runAction(animSequence)
+            
+        }
+    }
     
     
     func addLine(pos1:SCNVector3,pos2:SCNVector3) -> SCNNode {
