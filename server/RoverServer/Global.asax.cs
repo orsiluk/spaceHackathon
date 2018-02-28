@@ -10,6 +10,7 @@ using System.Web.Routing;
 using FluentScheduler;
 using NSwag.AspNet.Owin;
 using RoverServer.Controllers;
+using NKH.MindSqualls;
 
 namespace RoverServer
 {
@@ -31,6 +32,13 @@ namespace RoverServer
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        public override void Dispose()
+        {
+            Robot.Cleanup();
+
+            base.Dispose();
         }
     }
 }

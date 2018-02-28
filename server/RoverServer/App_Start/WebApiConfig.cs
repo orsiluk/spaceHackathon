@@ -5,8 +5,7 @@ using System.Linq;
 using System.Web.Http;
 using NSwag.SwaggerGeneration.WebApi;
 using RoverServer.Controllers;
-using RoverServer.RockBlock;
-using NKH.MindSqualls;
+//using RoverServer.RockBlock;
 
 namespace RoverServer
 {
@@ -29,11 +28,10 @@ namespace RoverServer
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.Properties.TryAdd("RockBlockClient", new LiveRockBlockClient("1234", "myusername", "mypassword"));
+            //config.Properties.TryAdd("RockBlockClient", new LiveRockBlockClient("1234", "myusername", "mypassword"));
             config.Properties.TryAdd("CommandList", new List<Command>());
 
-            var brick = new NxtBrick(NxtCommLinkType.USB, 0);
-            config.Properties.TryAdd("NXT", brick);
+            Robot.Init();
         }
     }
 }

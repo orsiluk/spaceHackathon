@@ -72,8 +72,16 @@ namespace RoverServer.Controllers
             commandList.Add(command);
             JobManager.AddJob(() =>
             {
-                telemetry.TrackEvent("Sending message to RockBlock");
-                GetRockBlockClient().SendCommand(command);
+                if (Robot.Mode == Robot.CommsMode.NXT)
+                {
+                    telemetry.TrackEvent("Sending message to NXT");
+                    Robot.HandleCommand(command);
+                }
+                else
+                {
+                    telemetry.TrackEvent("Sending message to RockBlock");
+                    GetRockBlockClient().SendCommand(command);
+                }
             }, (s) => s.ToRunOnceIn(0).Seconds());
             return true;
         }
