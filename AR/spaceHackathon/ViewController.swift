@@ -191,6 +191,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     var pointList: [SCNVector3] = []
     var loadcar: Bool = true
+    var carObject = SCNNode()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -245,10 +247,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let y = hitResult.worldTransform.columns.3.y
         let z = hitResult.worldTransform.columns.3.z
         if loadcar{
-            let node = SCNNode()
             
-            self.sceneView.scene.rootNode.addChildNode( addCar(x: x, y:y, z: z))
-//            pointList.append(node.position)
+            carObject = addCar(x: x, y:y, z: z)
+            self.sceneView.scene.rootNode.addChildNode(carObject)
+            
+            pointList.append(carObject.position)
             loadcar = false
         }else{
             let box = SCNSphere(radius: 0.02)
@@ -262,11 +265,31 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             boxNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
             boxNode.position = SCNVector3Make(x, y, z)
             self.sceneView.scene.rootNode.addChildNode(boxNode)
+            
+            let count = pointList.count
+            let currentPosition = pointList[count-1]
+            
+            
+            
+            
+            let angle = atan2(1, 0) - atan2(boxNode.position.y-currentPosition.y, boxNode.position.x-currentPosition.x);
+            
+            print(
+            let rotate = SCNAction.rotateTo(x:0, y: CGFloat(angle), z: 0, duration: 0.5)
+            let move = SCNAction.move(to: boxNode.position, duration: 1.5)
+            let animSequence = SCNAction.sequence([rotate, move])
+            
+        
+            carObject.runAction(animSequence)
             pointList.append(boxNode.position)
+
         }
         
         
     }
+    
+    
+    
     
 //    func addLine(pos1:SCNVector3,pos2:SCNVector3){
 //        let lineLength = calcPositions(pos1: pos1, pos2: pos2)
@@ -372,6 +395,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         return myObect
     }
     
+    
+    
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
         
@@ -412,6 +437,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         
+ 
     }
+    
+    
+
 }
 
