@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class MouseController : MonoBehaviour
@@ -27,7 +28,14 @@ public class MouseController : MonoBehaviour
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 		Physics.Raycast(ray, out hit);
-		return hit.point;
+		if (hit.transform.gameObject.layer == 9)
+		{
+			return hit.point;
+		}
+		else
+		{
+			throw new Exception();
+		}
 	}
 
 	IEnumerator buildPath()
@@ -35,10 +43,17 @@ public class MouseController : MonoBehaviour
 		List<Vector3> currentPath = new List<Vector3>();
 		while (Input.GetButton("Fire1"))
 		{
-			Vector3 point = createPathPoint();
-			currentPath.Add(point + Vector3.up*0.1f);
-			PathLine.positionCount = currentPath.Count;
-			PathLine.SetPositions(currentPath.ToArray());
+			try
+			{
+				Vector3 point = createPathPoint();
+				currentPath.Add(point + Vector3.up * 0.1f);
+				PathLine.positionCount = currentPath.Count;
+				PathLine.SetPositions(currentPath.ToArray());
+			}
+			catch (Exception e)
+			{
+				
+			}
 			yield return new WaitForSeconds(0.1f);
 		}
 		Rover.setPath(currentPath);

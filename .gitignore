@@ -6,3 +6,5 @@ simulation/HackathonSim/\.idea/\.idea\.HackathonSim/
 marsdata/venv/lib/python3\.5/__pycache__/
 
 marsdata/\.idea/
+
+*.tif

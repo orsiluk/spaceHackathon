@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.XR.WSA.WebCam;
 
 public class MarsMapper : MonoBehaviour
 {
@@ -46,13 +48,35 @@ public class MarsMapper : MonoBehaviour
 		UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
 		yield return www.SendWebRequest();
 		downloaded_tiles.Add(coords);
-		Texture texture = DownloadHandlerTexture.GetContent(www);
+		Texture2D texture = DownloadHandlerTexture.GetContent(www);
+		Texture2D bumpTexture = getGreyscale(texture);
 		GameObject tile = GameObject.CreatePrimitive(PrimitiveType.Plane);
 		tile.transform.position = new Vector3(coords.x*10, 0, coords.y*10);
 		tile.transform.Rotate(new Vector3(0,90,0));
+		tile.layer = 9;
 		Renderer rend = tile.GetComponent<Renderer>();
 		rend.material = new Material(tileShader);
 		rend.material.mainTexture = texture;
-		rend.material.SetTexture("_BumpMap", texture);
+		rend.material.SetTexture("_ParallaxMap", bumpTexture);
+	}
+
+	public Texture2D getGreyscale(Texture2D color)
+	{
+		Texture2D bumpTexture = new Texture2D(color.width, color.height, TextureFormat.RGB24, false, false);
+		Color[] pixels = color.GetPixels();
+		float max = 0;
+		for (int y = 0; y < color.height; y++)
+		{
+			for (int x = 0; x < color.width; x++)
+			{
+				Color pixel = pixels[x+y*color.width];
+				float lum = pixel.grayscale;
+				max = Math.Max(max, lum);
+				bumpTexture.SetPixel(x,y, new Color(lum,lum,lum));
+			}
+		}
+		Debug.Log(max);
+
+		return bumpTexture;
 	}
 }

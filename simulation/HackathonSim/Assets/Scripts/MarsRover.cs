@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class MarsRover : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class MarsRover : MonoBehaviour
 	private Vector3 cameraOffset;
 	private float cameraHeight = 0;
 	public Camera mainCamera;
+
+	public Text uiText;
 	// Use this for initialization
 	void Start ()
 	{
@@ -38,6 +41,8 @@ public class MarsRover : MonoBehaviour
 		Vector3 cameraPosition = transform.position + cameraOffset;
 		cameraPosition.y = cameraHeight;
 		mainCamera.transform.position = cameraPosition;
+		Vector2 latlng = getLatLong();
+		uiText.text = String.Format("{0},{1}", latlng.x, latlng.y);
 	}
 
 	public void MoveTo(Vector3 target)
@@ -83,5 +88,13 @@ public class MarsRover : MonoBehaviour
 		float turnAngle = Vector3.Angle(direction, transform.forward);
 		communicator.sendTurn( turnAngle);
 		communicator.sendMove(distance);
+	}
+
+	public Vector2 getLatLong()
+	{
+		Vector2 tileLocation = new Vector2(transform.position.x/10, transform.position.z/10);
+		float lat = tileLocation.x / 512 * 360 - 180;
+		float lng = tileLocation.y / 256 * 180 - 90;
+		return new Vector2(lat,lng);
 	}
 }
