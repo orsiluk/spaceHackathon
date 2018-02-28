@@ -1,9 +1,11 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Results;
+using FluentScheduler;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -46,16 +48,16 @@ namespace RoverServer.Controllers
         {
             GlobalConfiguration.Configuration.Properties.TryGetValue("CommandList", out object commandListObj);
             var commandList = (List<Command>) commandListObj;
-            GlobalConfiguration.Configuration.Properties.TryGetValue("CommandQueue", out object commandQueueObj);
-            var commandQueue = (ConcurrentQueue<Command>) commandQueueObj;
+
+            var telemetry = new Microsoft.ApplicationInsights.TelemetryClient();
 
             if (commandList.Exists(cmd => command.Id == cmd.Id))
             {
                 return false;
             }
-
-            commandQueue.Enqueue(command);
+            
             commandList.Add(command);
+            JobManager.AddJob(() => telemetry.TrackEvent("My New Event"), (s) => s.ToRunOnceIn(5).Seconds());
             return true;
         }
 
