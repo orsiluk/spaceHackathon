@@ -8,6 +8,8 @@ public class MarsRover : MonoBehaviour
 {
 
 	public NavMeshAgent agent;
+
+	public Communicator communicator;
 	// Use this for initialization
 	void Start () {
 		
@@ -41,5 +43,13 @@ public class MarsRover : MonoBehaviour
 		}
 		Debug.Log("Finished path");
 		agent.isStopped = true;
+	}
+	
+	void sendMovement(Vector3 point)
+	{
+		float distance = Vector3.Distance(transform.position, point);
+		Vector3 direction = point - transform.position;
+		float turnAngle = Vector3.Angle(direction, transform.forward);
+		communicator.sendCommand(distance, turnAngle);
 	}
 }
