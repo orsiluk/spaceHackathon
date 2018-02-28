@@ -253,7 +253,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
             pointList.append(carObject.position)
             loadcar = false
-        }else{
+        } else {
             let box = SCNSphere(radius: 0.02)
             let boxNode = SCNNode(geometry: box)
             
@@ -274,13 +274,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
             let angle = atan2(1, 0) - atan2(boxNode.position.y-currentPosition.y, boxNode.position.x-currentPosition.x);
             
-            print(
             let rotate = SCNAction.rotateTo(x:0, y: CGFloat(angle), z: 0, duration: 0.5)
             let move = SCNAction.move(to: boxNode.position, duration: 1.5)
             let animSequence = SCNAction.sequence([rotate, move])
             
         
             carObject.runAction(animSequence)
+            
+            let lineNode = addLine(pos1: boxNode.position, pos2:currentPosition)
+            self.sceneView.scene.rootNode.addChildNode(lineNode)
             pointList.append(boxNode.position)
 
         }
@@ -291,38 +293,42 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     
     
-//    func addLine(pos1:SCNVector3,pos2:SCNVector3){
-//        let lineLength = calcPositions(pos1: pos1, pos2: pos2)
-//        let midPoint = findMidPoint(pos1: pos1, pos2: pos2)
-//
-//        let line = SCNCylinder(radius: 0.05, height: lineLength)
-//        let lineNode = SCNNode(geometry: line)
-//
-//        lineNode.categoryBitMask = GeometryType.box.rawValue
-//        lineNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-//        lineNode.position = midPoint
-//
-//    }
+    func addLine(pos1:SCNVector3,pos2:SCNVector3) -> SCNNode {
+        let lineLength = calcPositions(pos1: pos1, pos2: pos2)
+        let midPoint = findMidPoint(pos1: pos1, pos2: pos2)
+
+        let line = SCNCylinder(radius: 0.005, height: lineLength)
+        let lineNode = SCNNode(geometry: line)
+        
+
+        lineNode.categoryBitMask = GeometryType.box.rawValue
+        lineNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+        lineNode.eulerAngles.x = -.pi / 2
+        lineNode.position = midPoint
+        
+        return lineNode
+
+    }
     
-//    func calcPositions(pos1:SCNVector3,pos2:SCNVector3) -> CGFloat{
-//
-//        print("Position1:",pos1)
-//        print("Position2:",pos2)
-//        let xLen = pos1.x - pos2.x
-//        let yLen = pos1.y - pos2.y
-//        let zLen = pos1.z - pos2.z
-//
-//        let len = sqrt(pow(xLen,2)+pow(yLen,2)+pow(zLen,2))
-//        print("------- Length : ",len)
-//        return CGFloat(len)
-//    }
-//
-//    func findMidPoint(pos1:SCNVector3,pos2:SCNVector3) -> SCNVector3{
-//        let xLen = (pos1.x + pos2.x)/2
-//        let yLen = (pos1.y + pos2.y)/2
-//        let zLen = (pos1.z + pos2.z)/2
-//        return SCNVector3Make(xLen,yLen,zLen)
-//    }
+    func calcPositions(pos1:SCNVector3,pos2:SCNVector3) -> CGFloat{
+
+        print("Position1:",pos1)
+        print("Position2:",pos2)
+        let xLen = pos1.x - pos2.x
+        let yLen = pos1.y - pos2.y
+        let zLen = pos1.z - pos2.z
+
+        let len = sqrt(pow(xLen,2)+pow(yLen,2)+pow(zLen,2))
+        print("------- Length : ",len)
+        return CGFloat(len)
+    }
+
+    func findMidPoint(pos1:SCNVector3,pos2:SCNVector3) -> SCNVector3{
+        let xLen = (pos1.x + pos2.x)/2
+        let yLen = (pos1.y + pos2.y)/2
+        let zLen = (pos1.z + pos2.z)/2
+        return SCNVector3Make(xLen,yLen,zLen)
+    }
     
 //    func addCircle(hitResult: ARHitTestResult) {
 //        print("add the circle")

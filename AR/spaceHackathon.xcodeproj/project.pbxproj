@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		320EBFD42047146200EDA8C7 /* car.dae in Resources */ = {isa = PBXBuildFile; fileRef = 320EBFD32047146200EDA8C7 /* car.dae */; };
 		61BD03F02046D115007EAAE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD03EF2046D115007EAAE9 /* AppDelegate.swift */; };
 		61BD03F22046D115007EAAE9 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 61BD03F12046D115007EAAE9 /* art.scnassets */; };
 		61BD03F42046D115007EAAE9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD03F32046D115007EAAE9 /* ViewController.swift */; };
@@ -14,7 +15,6 @@
 		61BD03F92046D117007EAAE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61BD03F82046D117007EAAE9 /* Assets.xcassets */; };
 		61BD03FC2046D117007EAAE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61BD03FA2046D117007EAAE9 /* LaunchScreen.storyboard */; };
 		61BD04072046D117007EAAE9 /* spaceHackathonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD04062046D117007EAAE9 /* spaceHackathonTests.swift */; };
-		61BD04162046F8FE007EAAE9 /* car.dae in Resources */ = {isa = PBXBuildFile; fileRef = 61BD04152046F8FD007EAAE9 /* car.dae */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		320EBFD32047146200EDA8C7 /* car.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = car.dae; sourceTree = "<group>"; };
 		61BD03EC2046D115007EAAE9 /* spaceHackathon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spaceHackathon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BD03EF2046D115007EAAE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		61BD03F12046D115007EAAE9 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -39,7 +40,6 @@
 		61BD04022046D117007EAAE9 /* spaceHackathonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = spaceHackathonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BD04062046D117007EAAE9 /* spaceHackathonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spaceHackathonTests.swift; sourceTree = "<group>"; };
 		61BD04082046D117007EAAE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		61BD04152046F8FD007EAAE9 /* car.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = car.dae; path = "../../../Year_4/Thesis/Museum_AR_App/image_recognition/ARKitImageRecognition/Resources/3D Objects/car.dae"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +87,7 @@
 				61BD03F52046D115007EAAE9 /* Main.storyboard */,
 				61BD03F82046D117007EAAE9 /* Assets.xcassets */,
 				61BD03FA2046D117007EAAE9 /* LaunchScreen.storyboard */,
-				61BD04152046F8FD007EAAE9 /* car.dae */,
+				320EBFD32047146200EDA8C7 /* car.dae */,
 				61BD03FD2046D117007EAAE9 /* Info.plist */,
 			);
 			path = spaceHackathon;
@@ -186,7 +186,7 @@
 				61BD03F22046D115007EAAE9 /* art.scnassets in Resources */,
 				61BD03FC2046D117007EAAE9 /* LaunchScreen.storyboard in Resources */,
 				61BD03F92046D117007EAAE9 /* Assets.xcassets in Resources */,
-				61BD04162046F8FE007EAAE9 /* car.dae in Resources */,
+				320EBFD42047146200EDA8C7 /* car.dae in Resources */,
 				61BD03F72046D115007EAAE9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,13 +366,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 647T4TNNN6;
+				DEVELOPMENT_TEAM = 9DDTDG8F4Q;
 				INFOPLIST_FILE = spaceHackathon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = OrsiLukacs.spaceHackathon;
+				PRODUCT_BUNDLE_IDENTIFIER = spaceHackathon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -384,13 +384,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 647T4TNNN6;
+				DEVELOPMENT_TEAM = 9DDTDG8F4Q;
 				INFOPLIST_FILE = spaceHackathon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = OrsiLukacs.spaceHackathon;
+				PRODUCT_BUNDLE_IDENTIFIER = spaceHackathon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
