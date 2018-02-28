@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:spaceHackathon.xcodeproj">
+      location = "group:/Users/lukacs_orsi/Desktop/spaceHackathon/AR/spaceHackathon/Main.storyboard">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
