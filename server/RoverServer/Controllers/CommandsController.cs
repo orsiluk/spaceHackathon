@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Results;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -45,28 +47,28 @@ namespace RoverServer.Controllers
             GlobalConfiguration.Configuration.Properties.TryGetValue("CommandList", out object commandListObj);
             var commandList = (List<Command>) commandListObj;
             GlobalConfiguration.Configuration.Properties.TryGetValue("CommandQueue", out object commandQueueObj);
-            var commandQueue = (List<Command>) commandQueueObj;
+            var commandQueue = (ConcurrentQueue<Command>) commandQueueObj;
 
             if (commandList.Exists(cmd => command.Id == cmd.Id))
             {
                 return false;
             }
 
-            commandQueue.Add(command);
+            commandQueue.Enqueue(command);
             commandList.Add(command);
             return true;
         }
 
         // GET api/commands/getall
-        public string GetAll()
+        public JsonResult<List<Command>> GetAll()
         {
-            return JsonConvert.SerializeObject(GetCommands());
+            return Json(GetCommands());
         }
 
         // GET api/commands/5
-        public string Get(int id)
+        public JsonResult<Command> Get(int id)
         {
-            return JsonConvert.SerializeObject(GetCommands().Where(cmd => cmd.Id == id));
+            return Json(GetCommands().First(cmd => cmd.Id == id));
         }
 
         // POST api/commands/issue
