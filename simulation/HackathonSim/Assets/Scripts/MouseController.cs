@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity;
-public class MouseController : MonoBehaviour {
+public class MouseController : MonoBehaviour
+{
+
+	public MarsRover Rover;
+	public LineRenderer PathLine;
 
 	// Use this for initialization
 	void Start () {
@@ -13,17 +16,32 @@ public class MouseController : MonoBehaviour {
 	void Update () {
 		if (Input.GetButtonDown("Fire1"))
 		{
-			mouseClick();
+			StartCoroutine(buildPath());
 		}
 	}
 
 
 
-	void mouseClick()
+	Vector3 createPathPoint()
 	{
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit))
-			GameObject.CreatePrimitive(PrimitiveType.Sphere).transform.position = hit.point;
+		Physics.Raycast(ray, out hit);
+		return hit.point;
 	}
+
+	IEnumerator buildPath()
+	{
+		List<Vector3> currentPath = new List<Vector3>();
+		while (Input.GetButton("Fire1"))
+		{
+			Vector3 point = createPathPoint();
+			currentPath.Add(point + Vector3.up*0.1f);
+			PathLine.positionCount = currentPath.Count;
+			PathLine.SetPositions(currentPath.ToArray());
+			yield return new WaitForSeconds(0.1f);
+		}
+		Rover.setPath(currentPath);
+	}
+	
 }
