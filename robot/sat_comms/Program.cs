@@ -22,21 +22,34 @@ namespace sat_comms
                 isu = new ISU(args[0]);
                 isu.Open();
 
-                Console.WriteLine("Attempting to read ISN...");
-                string ISN = isu.ISN;
-                Console.WriteLine("Done. ISN is: " + ISN);
-                Console.WriteLine();
+                isu.Configure();
+                isu.PrintDeviceInfo();
+                isu.PrintSignalQuality();
+                
+                bool messagesRemaining = true;
+                while(messagesRemaining)
+                {
+                    var result = isu.SendAndReceiveMessage();
+                    if (result.Item1 != null)
+                    {
+                        Console.WriteLine("Received message: " + result.Item1);
+                    }
+                    messagesRemaining = result.Item4 > 0;
+                }
+
+                // Use to send a message: var result = isu.SendAndReceiveMessage("My message");
+                //  But remember to check if a message was read at the same time afterwards!
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
             }
             finally
             {
                 if (isu != null)
                 {
                     isu.Close();
-                    isu = null;
                 }
 
                 Console.WriteLine("Press any key to continue...");
