@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "robot_test_console", "robot_test_console\robot_test_console.csproj", "{5C0F00AC-88FB-41D8-9541-032B8A9BC899}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NKH.MindSqualls", "..\NKH.MindSqualls\NKH.MindSqualls.csproj", "{9973018E-FC09-4549-A484-0B702ADE1EE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUsbWrapper", "..\NKH.MindSqualls\WinUsbWrapper\WinUsbWrapper.csproj", "{40C6E946-D5AC-43B8-AEDE-D896E9CBB3E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{5C0F00AC-88FB-41D8-9541-032B8A9BC899}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C0F00AC-88FB-41D8-9541-032B8A9BC899}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C0F00AC-88FB-41D8-9541-032B8A9BC899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9973018E-FC09-4549-A484-0B702ADE1EE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9973018E-FC09-4549-A484-0B702ADE1EE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9973018E-FC09-4549-A484-0B702ADE1EE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9973018E-FC09-4549-A484-0B702ADE1EE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40C6E946-D5AC-43B8-AEDE-D896E9CBB3E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40C6E946-D5AC-43B8-AEDE-D896E9CBB3E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40C6E946-D5AC-43B8-AEDE-D896E9CBB3E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40C6E946-D5AC-43B8-AEDE-D896E9CBB3E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
