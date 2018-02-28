@@ -10,11 +10,12 @@ public class MarsRover : MonoBehaviour
 
 	public NavMeshAgent agent;
 	public ParticleSystem flamethrower;
-
+	public MarsMapper mapper;
 	public Communicator communicator;
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+	{
+		StartCoroutine(updateWorld());
 	}
 	
 	// Update is called once per frame
@@ -38,6 +39,15 @@ public class MarsRover : MonoBehaviour
 	public void setPath(List<Vector3> path)
 	{
 		StartCoroutine(FollowPath(path));
+	}
+
+	IEnumerator updateWorld()
+	{
+		while (true)
+		{
+			yield return new WaitForSeconds(1);
+			mapper.updateTiles(transform.position);
+		}
 	}
 	
 	IEnumerator FollowPath(List<Vector3> path)
