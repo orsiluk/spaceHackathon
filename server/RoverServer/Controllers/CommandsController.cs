@@ -46,9 +46,15 @@ namespace RoverServer.Controllers
 
         private List<Command> GetCommands()
         {
-            object commands;
-            GlobalConfiguration.Configuration.Properties.TryGetValue("CommandList", out commands);
+            GlobalConfiguration.Configuration.Properties.TryGetValue("CommandList", out object commands);
             return (List<Command>) commands;
+        }
+
+        private void ResetCommands()
+        {
+            GlobalConfiguration.Configuration.Properties.TryGetValue("CommandList", out object objCommands);
+            var commands = (List<Command>)objCommands;
+            commands.RemoveAll(p => true);
         }
 
         private bool IssueCommand(Command command)
@@ -92,6 +98,14 @@ namespace RoverServer.Controllers
             return IssueCommand(value)
                 ? Content(HttpStatusCode.OK, $"Successfully issue command {value.Id}")
                 : Content(HttpStatusCode.BadRequest, "Failed to issue command");
+        }
+
+        [HttpDelete]
+        [ActionName("Reset")]
+        public IHttpActionResult Reset()
+        {
+            ResetCommands();
+            return Content(HttpStatusCode.OK, "Successfully reset command history");
         }
     }
 }
