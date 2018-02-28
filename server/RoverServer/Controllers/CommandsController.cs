@@ -81,6 +81,7 @@ namespace RoverServer.Controllers
                 {
                     telemetry.TrackEvent("Sending message to RockBlock");
                     GetRockBlockClient().SendCommand(command);
+                    telemetry.TrackEvent($"Response from RockBlock: {response}");
                 }
             }, (s) => s.ToRunOnceIn(0).Seconds());
             return true;

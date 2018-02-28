@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Http;
 using NSwag.SwaggerGeneration.WebApi;
 using RoverServer.Controllers;
+using RoverServer.RockBlock;
+
 //using RoverServer.RockBlock;
 
 namespace RoverServer
@@ -25,10 +28,14 @@ namespace RoverServer
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                defaults: new {id = RouteParameter.Optional}
             );
 
-            //config.Properties.TryAdd("RockBlockClient", new LiveRockBlockClient("1234", "myusername", "mypassword"));
+            /*config.Properties.TryAdd("RockBlockClient",
+                new LiveRockBlockClient(ConfigurationManager.AppSettings["rockblockIMEI"],
+                    ConfigurationManager.AppSettings["rockblockUsername"],
+                    ConfigurationManager.AppSettings["rockblockPassword"]));*/
+            config.Properties.TryAdd("RockBlockClient", new MockRockBlockClient());
             config.Properties.TryAdd("CommandList", new List<Command>());
 
             Robot.Init();

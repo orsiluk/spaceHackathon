@@ -14,7 +14,7 @@ using NKH.MindSqualls;
 
 namespace RoverServer
 {
-    public class WebApiApplication : System.Web.HttpApplication
+    public class WebApiApplication : HttpApplication
     {
         protected void Application_Start()
         {
