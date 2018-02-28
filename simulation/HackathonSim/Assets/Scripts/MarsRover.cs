@@ -34,6 +34,7 @@ public class MarsRover : MonoBehaviour
 		agent.isStopped = false;
 		foreach (var point in path)
 		{
+			sendMovement(point);
 			Debug.Log("Moving to next position");
 			MoveTo(point);
 			while (Vector3.Distance(transform.position, point) > 2)
@@ -50,6 +51,7 @@ public class MarsRover : MonoBehaviour
 		float distance = Vector3.Distance(transform.position, point);
 		Vector3 direction = point - transform.position;
 		float turnAngle = Vector3.Angle(direction, transform.forward);
-		communicator.sendCommand(distance, turnAngle);
+		communicator.sendTurn( turnAngle);
+		communicator.sendMove(distance);
 	}
 }

@@ -3,5 +3,6 @@
 public class RobotCommand
 {
     public int Id;
-    public String Command;
+    public String CommandType;
+    public String Data;
 }
