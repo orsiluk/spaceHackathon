@@ -112,15 +112,56 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             self.sceneView.scene.rootNode.addChildNode(boxNode)
             
             pointList.append(boxNode.position)
+            
+            let count = pointList.count
+            if (count > 1){
+                let angle = calculateAngle(pos1: pointList[count-1], pos2: pointList[count-2])
+                print("Angle")
+                print(angle)
+                
+                let and =  CGFloat(angle)
+                
+                let move = SCNAction.move(to: pointList[count-1], duration: 1.5)
+                
+                
+                var yRot = CGFloat(carObject.rotation.y)
+                
+                print("yrot")
+                print(yRot)
+                
+                
+                let rot = SCNAction.rotateTo(x: 0, y: and, z: 0, duration: 0.5)
+                
+                let animSequence = SCNAction.sequence([rot, move])
+                carObject.runAction(animSequence)
+                
+            }
+            
 
         }
         
-            let box2 = SCNSphere(radius: 0.0002)
-            let boxNode2 = SCNNode(geometry: box2)
         
     }
     
-    func executeStage(pos1:SCNVector3,pos2:SCNVector3)  {
+    func calculateAngle(pos1:SCNVector3,pos2:SCNVector3) -> (Float)  {
+        print("Position1:",pos1)
+        print("Position2:",pos2)
+        let xLen = pos1.x - pos2.x
+        let yLen = pos1.y - pos2.y
+        let zLen = pos1.z - pos2.z
+        
+        let len = sqrt(pow(xLen,2)+pow(yLen,2)+pow(zLen,2))
+        
+        var angle = atan2(1, 0) - atan2(pos2.z-pos1.z, pos2.x-pos1.x);
+        
+        //angle = angle * 360 / (2*(Float.pi));
+
+        if (angle < 0){
+            angle = angle + 2 * (Float.pi);
+        }
+
+        
+        return angle
         
     }
     
@@ -131,7 +172,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let pointCount = pointList.count
         
         for index in 0...pointCount-1{
-            executeStage(pos1: pointList[index], pos2: pointList[index+1])
+            //executeStage(pos1: pointList[index], pos2: pointList[index+1])
         }
     }
     
@@ -167,6 +208,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
         }
     }
+    
     
     
     func addLine(pos1:SCNVector3,pos2:SCNVector3) -> SCNNode {
