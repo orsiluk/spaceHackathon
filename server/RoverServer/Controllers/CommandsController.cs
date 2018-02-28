@@ -8,6 +8,7 @@ using System.Web.Http.Results;
 using FluentScheduler;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using RoverServer.RockBlock;
 
 namespace RoverServer.Controllers
 {
@@ -37,6 +38,12 @@ namespace RoverServer.Controllers
 
     public class CommandsController : ApiController
     {
+        private IRockBlockClient GetRockBlockClient()
+        {
+            GlobalConfiguration.Configuration.Properties.TryGetValue("RockBlockClient", out object rockBlockClient);
+            return (IRockBlockClient) rockBlockClient;
+        }
+
         private List<Command> GetCommands()
         {
             object commands;
@@ -60,8 +67,8 @@ namespace RoverServer.Controllers
             JobManager.AddJob(() =>
             {
                 telemetry.TrackEvent("Sending message to RockBlock");
-
-            }, (s) => s.ToRunOnceIn(5).Seconds());
+                GetRockBlockClient().SendCommand(command);
+            }, (s) => s.ToRunOnceIn(0).Seconds());
             return true;
         }
 
