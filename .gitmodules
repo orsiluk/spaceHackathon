@@ -1,0 +1,3 @@
+[submodule "AR/Alamofire"]
+	path = AR/Alamofire
+	url = https://github.com/Alamofire/Alamofire.git
