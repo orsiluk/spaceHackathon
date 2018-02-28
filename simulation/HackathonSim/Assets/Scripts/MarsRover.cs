@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,6 +9,7 @@ public class MarsRover : MonoBehaviour
 {
 
 	public NavMeshAgent agent;
+	public ParticleSystem flamethrower;
 
 	public Communicator communicator;
 	// Use this for initialization
@@ -16,7 +18,16 @@ public class MarsRover : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
+		if (Input.GetKey("space"))
+		{
+			flamethrower.gameObject.active = true;
+		}
+		else
+		{
+			flamethrower.gameObject.active = false;
+		}
 	}
 
 	public void MoveTo(Vector3 target)
