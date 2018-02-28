@@ -6,173 +6,6 @@
 //  Copyright © 2018 Orsolya Lukacs-Kisbandi. All rights reserved.
 //
 
-//import UIKit
-//import SceneKit
-//import ARKit
-//import Vision
-//import AVFoundation
-//
-//class ViewController: UIViewController, ARSCNViewDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
-//
-//    @IBOutlet var sceneView: ARSCNView!
-//
-////    override func viewDidLoad() {
-////        super.viewDidLoad()
-////
-////        // Set the view's delegate
-////        sceneView.delegate = self
-////
-////        // Show statistics such as fps and timing information
-////        sceneView.showsStatistics = true
-////
-////        // Create a new scene
-////        let scene = SCNScene()
-////
-////        // enable natural lighting
-////        sceneView.autoenablesDefaultLighting = true
-////
-////        // create cube
-//////        let circle = SCNSphere(radius: 0.1)
-//////
-//////        // create material
-//////        let material = SCNMaterial()
-//////        material.diffuse.contents = UIColor.blue
-//////
-//////        // create SCNNode
-//////        let node = SCNNode(geometry: circle)
-//////        node.geometry?.materials = [material]
-//////        node.position = SCNVector3Make(0, -0.1, -0.8)
-////
-////        // add SCNNode to the scene
-//////        scene.rootNode.addChildNode(node)
-////
-////        let tap = UITapGestureRecognizer(target: self, action: #selector(tappedOnScreen(recognizer:)))
-////        self.sceneView.addGestureRecognizer(tap)
-////
-////        print(tap)
-////
-////        // Set the scene to the view
-////        sceneView.scene = scene
-////    }
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        // Set the view's delegate
-//        sceneView.delegate = self
-//
-//        // Show statistics such as fps and timing information
-//        sceneView.showsStatistics = true
-//
-//        // Create a new scene
-//        let scene = SCNScene()
-//
-//        // Set the scene to the view
-//        sceneView.scene = scene
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(tappedOnScreen(recognizer:)))
-//        self.sceneView.addGestureRecognizer(tap)
-//    }
-//
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//        // Create a session configuration
-//        let configuration = ARWorldTrackingConfiguration()
-//
-//        // Run the view's session
-//        sceneView.session.run(configuration)
-//    }
-//
-//    @objc func tappedOnScreen(recognizer: UITapGestureRecognizer) {
-//        print("Tapped")
-//        let sceneV = recognizer.view as! ARSCNView
-//        let touchLocation = recognizer.location(in: sceneV)
-//        print(touchLocation)
-//
-//        let hitResult = sceneV.hitTest(touchLocation, types: ARHitTestResult.ResultType.existingPlaneUsingExtent)
-//
-//        if !hitResult.isEmpty {
-//
-//            guard let hitResult = hitResult.first else {
-//                return
-//            }
-//            print("not empty")
-//            self.addCircle(hitResult: hitResult)
-//        }
-//        print("empty but why?")
-//    }
-//
-////    @objc func tappedOnScreen(recognizer: UITapGestureRecognizer) {
-////        let sceneV = recognizer.view as! ARSCNView
-////        let touchLocation = recognizer.location(in: sceneV)
-////
-////        let hitResult = sceneV.hitTest(touchLocation, types: ARHitTestResult.ResultType.existingPlaneUsingExtent)
-////        if !hitResult.isEmpty {
-////            guard let hitResult = hitResult.first else {
-////                return
-////            }
-////            self.addCircle(hitResult: hitResult)
-////        }
-////    }
-//
-//    func addCircle(hitResult: ARHitTestResult) {
-//        print("add the circle")
-//        let circle = SCNSphere(radius: 0.1)
-//        let node = SCNNode(geometry: circle)
-//        // create material
-//        let material = SCNMaterial()
-//        material.diffuse.contents = UIColor.blue
-//
-//        // create SCNNode
-//        node.geometry?.materials = [material]
-//        node.position = SCNVector3Make(0, -0.1, -0.8)
-//
-////        boxNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.dynamic, shape: SCNPhysicsShape(geometry: box, options: nil))
-//
-//        node.position = SCNVector3Make(hitResult.worldTransform.columns.3.x, hitResult.worldTransform.columns.3.y + Float(circle.radius) + Float(1), hitResult.worldTransform.columns.3.z)
-//        self.sceneView.scene.rootNode.addChildNode(node)
-//    }
-//
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//
-//        // Pause the view's session
-//        sceneView.session.pause()
-//    }
-//
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//        // Release any cached data, images, etc that aren't in use.
-//    }
-//
-//    // MARK: - ARSCNViewDelegate
-//
-///*
-//    // Override to create and configure nodes for anchors added to the view's session.
-//    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-//        let node = SCNNode()
-//
-//        return node
-//    }
-//*/
-//
-//    func session(_ session: ARSession, didFailWithError error: Error) {
-//        // Present an error message to the user
-//
-//    }
-//
-//    func sessionWasInterrupted(_ session: ARSession) {
-//        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-//
-//    }
-//
-//    func sessionInterruptionEnded(_ session: ARSession) {
-//        // Reset tracking and/or remove existing anchors if consistent tracking is required
-//
-//    }
-//}
-
-
 import UIKit
 import SceneKit
 import ARKit
@@ -270,44 +103,64 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
             self.sceneView.scene.rootNode.addChildNode(boxNode)
             
-            let count = pointList.count
-            let currentPosition = pointList[count-1]
-            
-            
-            
-            
-            // let angle = carObject.position.angleBetweenVectors(boxNode.position)
+            pointList.append(boxNode.position)
+
+        }
         
             let box2 = SCNSphere(radius: 0.0002)
             let boxNode2 = SCNNode(geometry: box2)
+        
+    }
+    
+    func executeStage(pos1:SCNVector3,pos2:SCNVector3)  {
+        
+    }
+    
+    
+    
+    func executePath(pointList: [SCNVector3]){
+        
+        let pointCount = pointList.count
+        
+        for index in 0...pointCount-1{
+            executeStage(pos1: pointList[index], pos2: pointList[index+1])
+        }
+    }
+    
+    func visualisePath(pointList: [SCNVector3]){
+        
+        let pointCount = pointList.count
+        
+        
+        let carObject = addCar(x: pointList[0].x, y:pointList[0].y, z: pointList[0].z)
+        
+        self.sceneView.scene.rootNode.addChildNode(carObject)
+        
+        for index in 1...pointCount-1{
 
+            // let angle = carObject.position.angleBetweenVectors(boxNode.position)
             
-
-            let pointTarget = boxNode.position + boxNode.position - currentPosition
-            boxNode2.position = pointTarget
+            let target = SCNSphere(radius: 0.0002)
+            let targetNode = SCNNode(geometry: target)
             
 
             let move = SCNAction.move(to: boxNode.position, duration: 1.5)
             let animSequence = SCNAction.sequence([move])
+            let pointTarget = pointList[index] + pointList[index] - carObject.position
+            targetNode.position = pointTarget
             
+            let move = SCNAction.move(to: pointList[index], duration: 1.5)
+            let animSequence = SCNAction.sequence([ move])
             
-            let lookAt = SCNLookAtConstraint(target: boxNode2)
+            let lookAt = SCNLookAtConstraint(target: targetNode)
             
             carObject.constraints = [lookAt]
 //            let howMuch = SCNVector4Make(1, 0, 0, Float.pi/2)
 //            carObject.rotate(by: howMuch, aroundTarget: carObject.position)
             carObject.runAction(animSequence)
             
-            let lineNode = addLine(pos1: boxNode.position, pos2:currentPosition)
-            self.sceneView.scene.rootNode.addChildNode(lineNode)
-            pointList.append(boxNode.position)
-
         }
-        
-        
     }
-    
-    
     
     
     func addLine(pos1:SCNVector3,pos2:SCNVector3) -> SCNNode {
