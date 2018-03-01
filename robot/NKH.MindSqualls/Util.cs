@@ -83,11 +83,11 @@ namespace NKH.MindSqualls
 
         internal static void SetUInt32(UInt32 number, byte[] byteArr, byte index)
         {
-            for (byte offset = 0; offset <= 3; offset++)
+            for (byte offset = 0; offset < 4; offset++)
             {
-                byteArr[index + offset] = (byte)(number % 0x100);
+                byteArr[index + offset] = (byte)(number);
                 number >>= 8;
-            };
+            }
         }
 
         #endregion

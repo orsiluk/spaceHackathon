@@ -49,6 +49,7 @@ namespace NKH.MindSqualls
             if (motorY.reversed) powerY *= -1;
 
             // Reset tachometers.
+            ResetMotorPosition(true);
             ResetMotorPosition(false);
 
             motorX.Brick.CommLink.SetOutputState(
