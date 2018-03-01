@@ -49,5 +49,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NKH.MindSqualls\NKH.MindSqualls.csproj">
+      <Project>{9973018e-fc09-4549-a484-0b702ade1ee9}</Project>
+      <Name>NKH.MindSqualls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NKH.MindSqualls\WinUsbWrapper\WinUsbWrapper.csproj">
+      <Project>{40c6e946-d5ac-43b8-aede-d896e9cbb3e2}</Project>
+      <Name>WinUsbWrapper</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -3,6 +3,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Formatting;
+using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Results;
 using FluentScheduler;
@@ -36,6 +38,11 @@ namespace RoverServer.Controllers
         {
             return $"Command {Id} : {CommandType} | {Data}";
         }
+
+        public bool IsValid()
+        {
+            return Data != null;
+        }
     }
 
     public class CommandsController : ApiController
@@ -65,6 +72,11 @@ namespace RoverServer.Controllers
             var commandList = (List<Command>) commandListObj;
 
             var telemetry = new Microsoft.ApplicationInsights.TelemetryClient();
+
+            if (!command.IsValid())
+            {
+                return false;
+            }
 
             if (commandList.Exists(cmd => command.Id == cmd.Id))
             {

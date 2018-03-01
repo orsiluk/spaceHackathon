@@ -2,15 +2,85 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace sat_comms
 {
+    class Application
+    {
+        readonly ISU _isu;
+        private bool _running = true;
+
+        public Application(ISU isu)
+        {
+            _isu = isu;
+        }
+
+        public void CheckMessages()
+        {
+            var messagesRemaining = true;
+            while (messagesRemaining)
+            {
+                var result = _isu.SendAndReceiveMessage();
+                if (result.Message != null)
+                {
+                    Console.WriteLine("Received message: " + result.Message);
+                }
+                messagesRemaining = result.MessagesRemaining > 0;
+            }
+        }
+
+        public void Run()
+        {
+            var thread = new Thread(() =>
+            {
+                _isu.Configure();
+                _isu.PrintDeviceInfo();
+                _isu.PrintSignalQuality();
+
+                Console.WriteLine("Starting Main Loop:");
+
+                while (_running)
+                {
+                    Thread.Sleep(1000);
+                    CheckMessages();
+                }
+            });
+        }
+
+        public void Stop()
+        {
+            _running = false;
+            _isu?.Close();
+        }
+    }
+
     class Program
     {
+        public static ISU GetIsu(string comPort)
+        {
+            var isu = new ISU(comPort);
+            try
+            {
+                isu.Open();
+            }
+            catch (Exception)
+            {
+                isu.Close();
+            }
+            return isu;
+        }
+
         public static void Main(string[] args)
         {
-            ISU isu = null;
+            var exitEvent = new ManualResetEvent(false);
+
+            Console.CancelKeyPress += (sender, eventArgs) =>
+            {
+                eventArgs.Cancel = true;
+                exitEvent.Set();
+            };
 
             try
             {
@@ -19,26 +89,15 @@ namespace sat_comms
                     throw new Exception("Incorrect number of command line args. Args: COMPort");
                 }
 
-                isu = new ISU(args[0]);
-                isu.Open();
-
-                isu.Configure();
-                isu.PrintDeviceInfo();
-                isu.PrintSignalQuality();
-                
-                bool messagesRemaining = true;
-                while(messagesRemaining)
+                Console.WriteLine("Initialising ISU:");
+                using (var isu = GetIsu(args[0]))
                 {
-                    var result = isu.SendAndReceiveMessage();
-                    if (result.Message != null)
-                    {
-                        Console.WriteLine("Received message: " + result.Message);
-                    }
-                    messagesRemaining = result.MessagesRemaining > 0;
-                }
+                    var app = new Application(isu);
+                    app.Run();
 
-                // Use to send a message: var result = isu.SendAndReceiveMessage("My message");
-                //  But remember to check if a message was read at the same time afterwards!
+                    exitEvent.WaitOne();
+                    app.Stop();
+                }
             }
             catch (Exception ex)
             {
@@ -47,8 +106,6 @@ namespace sat_comms
             }
             finally
             {
-                isu?.Close();
-
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
 
