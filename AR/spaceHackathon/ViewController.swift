@@ -135,10 +135,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             print("Posting item: ")
             print(index)
             
-            let angle = calculateAngle(pos1: pointList[index], pos2: pointList[index-1])
+            let angle =  calculateAngle(pos1: pointList[index], pos2: pointList[index-1])
             let distance = getDistance(pos1: pointList[index], pos2: pointList[index-1])
             
-            let degrees = angle * 180/Float.pi
+            let degrees = angle * 180/(Float.pi)
             self.postToServer(id: counter, commandType: "Right", value: degrees)
             counter = counter+1
             self.postToServer(id: counter, commandType: "Forward", value: Float(distance*100))
@@ -257,15 +257,23 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             print("Visualize path")
             print(index)
             
-            let angle = calculateAngle(pos1: pointList[index], pos2: pointList[index-1])
+            var angle = calculateAngle(pos1: pointList[index], pos2: pointList[index-1])
+            
+            if angle > (Float.pi){
+                angle = angle - 2*(Float.pi)
+            }
             
             let and =  CGFloat(angle)
+            
             var yRot = CGFloat(carObject.rotation.y)
             
             print("yrot")
             print(yRot)
             print(pointList[index])
             let move = SCNAction.move(to: pointList[index], duration: 1.5)
+            
+            
+            
             let rot = SCNAction.rotateTo(x: 0, y: and, z: 0, duration: 0.5)
             animList.append(rot)
             animList.append(move)
