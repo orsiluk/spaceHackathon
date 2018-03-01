@@ -7,7 +7,7 @@ using System.IO.Ports;
 
 namespace sat_comms
 {
-    class ISU
+    class ISU : IDisposable
     {
         private SerialPort port;
 
@@ -515,6 +515,11 @@ namespace sat_comms
                 SendSuccessful = sendOK,
                 MessagesRemaining = status.Item6
             };
+        }
+
+        public void Dispose()
+        {
+            port.Close();
         }
     }
 }
