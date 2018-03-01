@@ -30,13 +30,25 @@ namespace robot_test_console
 
             Console.WriteLine("Running motors B and C...");
 
-            // Run them at 75% power, for a 3600 degree run.
-            motorPair.Run(75, 3600, 0);
-            Console.WriteLine("Running...");
+            //brick.MotorB.Run(50, 360);
 
-            // Wait 8 seconds before putting the motors into idle-mode.
-            System.Threading.Thread.Sleep(8 * 1000);
-            motorPair.Idle();
+            // Run them at 75% power, for a 3600 degree run.
+            while (true)
+            {
+                motorPair.Run(100, 3600, -100);
+                Console.WriteLine("Running...");
+
+                // Wait 8 seconds before putting the motors into idle-mode.
+                System.Threading.Thread.Sleep(7 * 1000);
+                motorPair.Run(100, 10, 0);
+                System.Threading.Thread.Sleep(200);
+                motorPair.Idle();
+                System.Threading.Thread.Sleep(200);
+            }
+
+            brick.MotorB.Idle();
+            brick.MotorC.Idle();
+            //motorPair.Idle();
 
             Console.WriteLine("Done.");
 

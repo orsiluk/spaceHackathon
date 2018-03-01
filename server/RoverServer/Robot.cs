@@ -55,6 +55,18 @@ namespace RoverServer
         public static void HandleCommand(RoverServer.Controllers.Command command)
         {
             // TODO
+            int data = int.Parse(command.Data);
+            switch (command.CommandType)
+            {
+                case Controllers.CommandType.Forward:
+                    DriveForward(data);
+                    break;
+                case Controllers.CommandType.Backward:
+                    DriveBackward(data);
+                    break;
+                default:
+                    throw new ArgumentException("Unrecognised command type.");
+            }
         }
 
         public static void DriveForward(int distance)
@@ -72,13 +84,13 @@ namespace RoverServer
         public static void DriveLeft(int degrees)
         {
             // TODO: Distance per degree of turn of wheels -> degrees requested -> some actual number of degrees to turn
-            motorPair.Run(-100, 360, 100);
+            motorPair.Run(100, 360, 100);
         }
 
         public static void DriveRight(int degrees)
         {
             // TODO: Distance per degree of turn of wheels -> degrees requested -> some actual number of degrees to turn
-            motorPair.Run(-100, 360, -100);
+            motorPair.Run(100, 360, -100);
         }
     }
 }
