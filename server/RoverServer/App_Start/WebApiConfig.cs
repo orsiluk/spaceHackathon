@@ -37,6 +37,7 @@ namespace RoverServer
                     ConfigurationManager.AppSettings["rockblockPassword"]));*/
             config.Properties.TryAdd("RockBlockClient", new MockRockBlockClient());
             config.Properties.TryAdd("CommandList", new List<Command>());
+            config.Properties.TryAdd("MessageId", 0);
 
             Robot.Init();
         }

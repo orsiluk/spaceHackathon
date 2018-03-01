@@ -34,9 +34,12 @@ namespace RoverServer.Controllers
         [JsonProperty(Required = Required.Always)]
         public string Data { get; set; }
 
+        [JsonProperty(Required = Required.Always)]
+        public int AutomaticId { get; set; }
+
         public override string ToString()
         {
-            return $"Command {Id} : {CommandType} | {Data}";
+            return $"Command {Id} (auto: {AutomaticId}) : {CommandType} | {Data}";
         }
 
         public bool IsValid()
@@ -78,12 +81,13 @@ namespace RoverServer.Controllers
                 return false;
             }
 
-            if (commandList.Exists(cmd => command.Id == cmd.Id))
+            if (commandList.Exists(cmd => command.AutomaticId == cmd.AutomaticId))
             {
                 return false;
             }
-            
+
             commandList.Add(command);
+
             JobManager.AddJob(() =>
             {
                 if (Robot.Mode == RobotLib.Robot.CommsMode.NXT)
@@ -98,6 +102,7 @@ namespace RoverServer.Controllers
                     telemetry.TrackEvent($"Response from RockBlock: {response}");
                 }
             }, (s) => s.ToRunOnceIn(0).Seconds());
+
             return true;
         }
 
@@ -110,7 +115,7 @@ namespace RoverServer.Controllers
         // GET api/commands/5
         public JsonResult<Command> Get(int id)
         {
-            return Json(GetCommands().First(cmd => cmd.Id == id));
+            return Json(GetCommands().FirstOrDefault(cmd => cmd.Id == id));
         }
 
         // POST api/commands/issue
@@ -118,6 +123,10 @@ namespace RoverServer.Controllers
         [ActionName("Issue")]
         public IHttpActionResult Issue([FromBody] Command value)
         {
+            GlobalConfiguration.Configuration.Properties.TryGetValue("MessageId", out object messageId);
+            GlobalConfiguration.Configuration.Properties.TryUpdate("MessageId", (int)messageId + 1, (int)messageId);
+            value.AutomaticId = (int)messageId;
+
             return IssueCommand(value)
                 ? Content(HttpStatusCode.OK, $"Successfully issue command {value.Id}:{value.CommandType}:{value.Data}")
                 : Content(HttpStatusCode.BadRequest, $"Failed to issue command {value.Id}:{value.CommandType}:{value.Data}");
