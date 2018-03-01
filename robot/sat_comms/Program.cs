@@ -6,12 +6,13 @@ namespace sat_comms
     class Application
     {
         readonly IISU _isu;
-        private readonly RobotWrapper _robot;
+        private readonly IRobot _robot;
         private bool _running = true;
 
-        public Application(IISU isu, RobotWrapper robot)
+        public Application(IISU isu, IRobot robot)
         {
             _isu = isu;
+            _robot = robot;
         }
 
         private void HandleMessage(string message)
@@ -39,19 +40,19 @@ namespace sat_comms
             {
                 case "FORWARD":
                     Console.WriteLine($"Driving forward {payload}cm");
-                    RobotLib.Robot.DriveForward(payload);
+                    _robot.DriveForward(payload);
                     break;
                 case "BACKWARD":
                     Console.WriteLine($"Driving backward {payload}cm");
-                    RobotLib.Robot.DriveBackward(payload);
+                    _robot.DriveBackward(payload);
                     break;
                 case "LEFT":
                     Console.WriteLine($"Turning left {payload}deg");
-                    RobotLib.Robot.DriveLeft(payload);
+                    _robot.DriveLeft(payload);
                     break;
                 case "RIGHT":
                     Console.WriteLine($"Turning right {payload}deg");
-                    RobotLib.Robot.DriveRight(payload);
+                    _robot.DriveRight(payload);
                     break;
             }
         }
@@ -79,7 +80,7 @@ namespace sat_comms
                 _isu.Configure();
                 _isu.PrintDeviceInfo();
                 _isu.PrintSignalQuality();
-                _isu.SetNextMessageToSend(RobotLib.Robot.Name);
+                _isu.SetNextMessageToSend(_robot.Name);
 
                 Console.WriteLine("Starting Main Loop:");
 
@@ -134,9 +135,11 @@ namespace sat_comms
                     throw new Exception("Incorrect number of command line args. Args: COMPort");
                 }
 
+                bool useMockRobot = args.Length > 1 && args[1] == "mock-robot";
+
                 Console.WriteLine("Initialising ISU");
                 using (var isu = GetIsu(args[0]))
-                using (var robot = new RobotWrapper())
+                using (var robot = useMockRobot ? (IRobot) new RobotMock() : new RobotWrapper())
                 {
                     var app = new Application(isu, robot);
                     app.Run();

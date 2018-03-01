@@ -2,7 +2,45 @@
 
 namespace sat_comms
 {
-    class RobotWrapper : IDisposable
+    interface IRobot : IDisposable
+    {
+        string Name { get; }
+        void DriveLeft(int degrees);
+        void DriveRight(int degrees);
+        void DriveForward(int distance);
+        void DriveBackward(int distance);
+    }
+
+    class RobotMock : IRobot
+    {
+        public void Dispose()
+        {
+        }
+
+        public void DriveLeft(int degrees)
+        {
+            Console.WriteLine($"Pretending to turn left {degrees}deg");
+        }
+
+        public void DriveRight(int degrees)
+        {
+            Console.WriteLine($"Pretending to turn right {degrees}deg");
+        }
+
+        public void DriveForward(int distance)
+        {
+            Console.WriteLine($"Pretending to drive forward {distance}cm");
+        }
+
+        public void DriveBackward(int distance)
+        {
+            Console.WriteLine($"Pretending to drive backward {distance}cm");
+        }
+
+        public string Name => "FakeRobot";
+    }
+
+    class RobotWrapper : IRobot
     {
         public RobotWrapper()
         {
@@ -22,5 +60,27 @@ namespace sat_comms
         {
             RobotLib.Robot.Cleanup();
         }
+
+        public void DriveLeft(int degrees)
+        {
+            RobotLib.Robot.DriveLeft(degrees);
+        }
+
+        public void DriveRight(int degrees)
+        {
+            RobotLib.Robot.DriveRight(degrees);
+        }
+
+        public void DriveForward(int distance)
+        {
+            RobotLib.Robot.DriveForward(distance);
+        }
+
+        public void DriveBackward(int distance)
+        {
+            RobotLib.Robot.DriveBackward(distance);
+        }
+
+        public string Name => RobotLib.Robot.Name;
     }
 }
