@@ -7,6 +7,7 @@ public class MouseController : MonoBehaviour
 
 	public MarsRover Rover;
 	public LineRenderer PathLine;
+	public MarsMapper mapper;
 
 	// Use this for initialization
 	void Start () {
@@ -17,7 +18,21 @@ public class MouseController : MonoBehaviour
 	void Update () {
 		if (Input.GetButtonDown("Fire1"))
 		{
-			StartCoroutine(buildPath());
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+			Physics.Raycast(ray, out hit);
+			if (hit.transform.gameObject.layer == 9)
+			{
+				StartCoroutine(buildPath());
+			}
+			else if(hit.transform.tag == "Mars")
+			{
+				mapper.SetPlanet(Planet.Mars);	
+			}else if (hit.transform.tag == "Moon")
+			{
+				mapper.SetPlanet(Planet.Moon);	
+
+			}
 		}
 	}
 

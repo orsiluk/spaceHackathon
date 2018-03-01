@@ -6,17 +6,31 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.XR.WSA.WebCam;
 
+public enum Planet
+{
+	Moon,
+	Mars
+};
+
 public class MarsMapper : MonoBehaviour
 {
 	public Shader tileShader;
-	private static string api =
+
+	private Planet current_planet = Planet.Moon;
+	
+	private static string moon_api =
+		"http://moontrek.jpl.nasa.gov/trektiles/Moon/EQ/LRO_WAC_Mosaic_Global_303ppd_v02/1.0.0/default/default028mm/8/";
+	private static string mars_api =
 		"https://mars.nasa.gov/maps/explore-mars-map/catalog/Mars_Viking_MDIM21_ClrMosaic_global_232m/1.0.0/default/default028mm/9/";
 
 	private HashSet<Vector2> downloaded_tiles;
+
+	private List<GameObject> tiles;
 	// Use this for initialization
 	void Start ()
 	{
 		downloaded_tiles = new HashSet<Vector2>();
+		tiles = new List<GameObject>();
 	}
 	
 	// Update is called once per frame
@@ -44,7 +58,17 @@ public class MarsMapper : MonoBehaviour
 	
 	public IEnumerator GetTile(Vector2 coords)
 	{
-		string url = api + coords.x + "/" + coords.y + ".png";
+		string url = "";
+		switch (current_planet)
+		{
+			case Planet.Mars:
+				url = mars_api + coords.x + "/" + coords.y + ".png";
+				break;
+			case Planet.Moon:
+				url = moon_api + coords.x + "/" + coords.y + ".jpg";
+				break;
+		}
+		
 		UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
 		yield return www.SendWebRequest();
 		downloaded_tiles.Add(coords);
@@ -57,6 +81,7 @@ public class MarsMapper : MonoBehaviour
 		Renderer rend = tile.GetComponent<Renderer>();
 		rend.material = new Material(tileShader);
 		rend.material.mainTexture = texture;
+		tiles.Add(tile);
 		//rend.material.SetTexture("_ParallaxMap", bumpTexture);
 	}
 
@@ -84,5 +109,15 @@ public class MarsMapper : MonoBehaviour
 		outCart.x = a * Mathf.Cos(polar);
 		outCart.y = radius * Mathf.Sin(elevation);
 		outCart.z = a * Mathf.Sin(polar);
+	}
+
+	public void SetPlanet(Planet planet)
+	{
+		foreach (GameObject tile in tiles)
+		{
+			Destroy(tile);
+		}
+		downloaded_tiles = new HashSet<Vector2>();
+		current_planet = planet;
 	}
 }
