@@ -92,9 +92,6 @@ public class MarsRover : MonoBehaviour
 
 	public Vector2 getLatLong()
 	{
-		Vector2 tileLocation = new Vector2(transform.position.x/10, transform.position.z/10);
-		float lat = tileLocation.x / 512 * 360 - 180;
-		float lng = tileLocation.y / 256 * 180 - 90;
-		return new Vector2(lat,lng);
+		return MarsMapper.MapToLatLng(transform.position.x/10, transform.position.z/10);
 	}
 }

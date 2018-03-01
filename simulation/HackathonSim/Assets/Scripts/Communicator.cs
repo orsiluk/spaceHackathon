@@ -53,5 +53,6 @@ public class Communicator : MonoBehaviour {
 	{
 		yield return data;
 		Debug.Log(data.error);
+		Debug.Log(data.text);
 	}
 }

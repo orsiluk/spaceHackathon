@@ -16,6 +16,12 @@ public class MarsMapper : MonoBehaviour
 {
 	public Shader tileShader;
 
+	public MarsRover Rover;
+
+	public GameObject Mars;
+	public GameObject Moon;
+	public GameObject MiniRover;
+
 	private Planet current_planet = Planet.Moon;
 	
 	private static string moon_api =
@@ -24,6 +30,7 @@ public class MarsMapper : MonoBehaviour
 		"https://mars.nasa.gov/maps/explore-mars-map/catalog/Mars_Viking_MDIM21_ClrMosaic_global_232m/1.0.0/default/default028mm/9/";
 
 	private HashSet<Vector2> downloaded_tiles;
+	
 
 	private List<GameObject> tiles;
 	// Use this for initialization
@@ -34,7 +41,24 @@ public class MarsMapper : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
+		Vector2 robotPos = Rover.getLatLong();
+		Vector3 coords = LatLngToCart(robotPos, 0.5f);
+		//Debug.Log(coords);
+		switch (current_planet)
+		{
+				case Planet.Mars:
+					MiniRover.transform.position = Mars.transform.position + coords;
+					break;
+				case Planet.Moon:
+					MiniRover.transform.position = Moon.transform.position + coords;
+					break;
+		}
+
+
+
+
 		
 	}
 
@@ -104,11 +128,18 @@ public class MarsMapper : MonoBehaviour
 		return bumpTexture;
 	}
 	
-	public static void SphericalToCartesian(float radius, float polar, float elevation, out Vector3 outCart){
-		float a = radius * Mathf.Cos(elevation);
-		outCart.x = a * Mathf.Cos(polar);
-		outCart.y = radius * Mathf.Sin(elevation);
-		outCart.z = a * Mathf.Sin(polar);
+	public static Vector2 MapToLatLng(float x, float y){
+		double lon = x / (512.0 / 360.0) - 180.0;
+		double lat = y / (256.0 / 180.0) - 90.0;
+		return new Vector2((float)lat, (float)lon);
+	}
+
+	public static Vector3 LatLngToCart(Vector2 latlng, float radius)
+	{
+		double x = radius * Math.Cos(latlng[0]) * Math.Cos(latlng[1]);
+		double y = radius * Math.Cos(latlng[0]) * Math.Sin(latlng[1]);
+		double z = radius * Math.Sin(latlng[0]);
+		return new Vector3((float)x,(float)y,(float)z);
 	}
 
 	public void SetPlanet(Planet planet)
