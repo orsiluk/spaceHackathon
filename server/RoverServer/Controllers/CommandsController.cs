@@ -15,7 +15,9 @@ namespace RoverServer.Controllers
     public enum CommandType
     {
         Forward,
-        Backward
+        Backward,
+        Left,
+        Right
     }
 
     public class Command

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using System.IO.Ports;
 
 namespace sat_comms
@@ -22,6 +21,7 @@ namespace sat_comms
             ShortBurstData,
             MotorolaSatelliteProductProprietary
         }
+
         public readonly string[] ExtendedCommandGroupPrefixes =
         {
             "",
@@ -89,10 +89,11 @@ namespace sat_comms
             port.BaseStream.Flush();
         }
 
-        private void issueExtendedATCommand(string cmd, ExtendedCommandGroups prefix = ExtendedCommandGroups.None, int[] args = null)
+        private void issueExtendedATCommand(string cmd, ExtendedCommandGroups prefix = ExtendedCommandGroups.None,
+            int[] args = null)
         {
             cmd = cmd.ToUpper();
-            string cmdString = "AT" + ExtendedCommandGroupPrefixes[(int)prefix] + cmd;
+            string cmdString = "AT" + ExtendedCommandGroupPrefixes[(int) prefix] + cmd;
             if (args != null)
             {
                 cmdString += "=";
@@ -128,11 +129,11 @@ namespace sat_comms
             {
                 line = port.ReadTo("\r").Replace("\n", "");
                 lines.Add(line);
-            }
-            while (!line.StartsWith("OK") && !line.StartsWith("ERROR") && !line.StartsWith("READY"));
+            } while (!line.StartsWith("OK") && !line.StartsWith("ERROR") && !line.StartsWith("READY"));
 
             lines.RemoveAll((x) => String.IsNullOrWhiteSpace(x));
-            return new Tuple<List<string>, bool>(lines, lines[lines.Count-1].StartsWith("OK") || lines[lines.Count - 1].StartsWith("READY"));
+            return new Tuple<List<string>, bool>(lines,
+                lines[lines.Count - 1].StartsWith("OK") || lines[lines.Count - 1].StartsWith("READY"));
         }
 
         private void ThrowFailedResponse(string message, Tuple<List<string>, bool> response)
@@ -141,16 +142,14 @@ namespace sat_comms
         }
 
         private Verbosities _verbosity = Verbosities.Unset;
+
         public Verbosities Verbosity
         {
-            get
-            {
-                return _verbosity;
-            }
+            get { return _verbosity; }
             set
             {
                 _verbosity = value;
-                issueBasicATCommand("V", (int)value);
+                issueBasicATCommand("V", (int) value);
                 if (!ResponseSuppression)
                 {
                     Tuple<List<string>, bool> response = readResponse();
@@ -163,12 +162,10 @@ namespace sat_comms
         }
 
         private bool responseSuppression = true;
+
         public bool ResponseSuppression
         {
-            get
-            {
-                return responseSuppression;
-            }
+            get { return responseSuppression; }
             set
             {
                 responseSuppression = value;
@@ -185,12 +182,10 @@ namespace sat_comms
         }
 
         private bool echoEnable = false;
+
         public bool EchoEnable
         {
-            get
-            {
-                return echoEnable;
-            }
+            get { return echoEnable; }
             set
             {
                 echoEnable = value;
@@ -207,12 +202,10 @@ namespace sat_comms
         }
 
         private bool radioEnable = false;
+
         public bool RadioEnable
         {
-            get
-            {
-                return radioEnable;
-            }
+            get { return radioEnable; }
             set
             {
                 radioEnable = value;
@@ -228,12 +221,14 @@ namespace sat_comms
             }
         }
 
-        private string getValue(bool extended, string command, int? param, string name, ExtendedCommandGroups extGroup = ExtendedCommandGroups.None)
+        private string getValue(bool extended, string command, int? param, string name,
+            ExtendedCommandGroups extGroup = ExtendedCommandGroups.None)
         {
             return getValues(extended, command, param, name, extGroup)[0];
         }
 
-        private List<string> getValues(bool extended, string command, int? param, string name, ExtendedCommandGroups extGroup = ExtendedCommandGroups.None)
+        private List<string> getValues(bool extended, string command, int? param, string name,
+            ExtendedCommandGroups extGroup = ExtendedCommandGroups.None)
         {
             if (Verbosity != Verbosities.Verbose)
             {
@@ -246,7 +241,7 @@ namespace sat_comms
 
             if (extended)
             {
-                issueExtendedATCommand(command, extGroup, param.HasValue ? new int[] { param.Value } : null);
+                issueExtendedATCommand(command, extGroup, param.HasValue ? new int[] {param.Value} : null);
             }
             else
             {
@@ -268,57 +263,41 @@ namespace sat_comms
 
         public string SoftwareRevision
         {
-            get
-            {
-                return getValue(false, "I", 3, "software revision");
-            }
+            get { return getValue(false, "I", 3, "software revision"); }
         }
 
         public string ProductFamily
         {
-            get
-            {
-                return getValue(false, "I", 4, "product family");
-            }
+            get { return getValue(false, "I", 4, "product family"); }
         }
 
         public string HardwareSpecification
         {
-            get
-            {
-                return getValue(false, "I", 7, "hardware specification");
-            }
+            get { return getValue(false, "I", 7, "hardware specification"); }
         }
 
         public string FactoryIdentity
         {
-            get
-            {
-                return getValue(false, "I", 6, "factory identity");
-            }
+            get { return getValue(false, "I", 6, "factory identity"); }
         }
 
         public string ISN
         {
-            get
-            {
-                return getValue(true, "SN", null, "ISN (IMEI)", ExtendedCommandGroups.Generic);
-            }
+            get { return getValue(true, "SN", null, "ISN (IMEI)", ExtendedCommandGroups.Generic); }
         }
 
         public string AllRegisters
         {
-            get
-            {
-                return String.Join("\n", getValues(false, "%R", null, "all registers"));
-            }
+            get { return String.Join("\n", getValues(false, "%R", null, "all registers")); }
         }
 
         public int SignalQuality
         {
             get
             {
-                string result = getValue(true, "SQ", null, "signal quality", ExtendedCommandGroups.Cellular).Split(":".ToCharArray())[1];
+                string result =
+                    getValue(true, "SQ", null, "signal quality", ExtendedCommandGroups.Cellular)
+                        .Split(":".ToCharArray())[1];
                 return int.Parse(result);
             }
         }
@@ -334,7 +313,7 @@ namespace sat_comms
                 throw new OutOfMemoryException("Minimum mobile-originated data length is 1 byte.");
             }
 
-            issueExtendedATCommand("WB", ExtendedCommandGroups.ShortBurstData, new int[] { data.Length });
+            issueExtendedATCommand("WB", ExtendedCommandGroups.ShortBurstData, new int[] {data.Length});
             bool isReady = readResponse().Item2;
             if (!isReady)
             {
@@ -342,15 +321,15 @@ namespace sat_comms
             }
 
             int checksum = 0;
-            foreach(byte x in data)
+            foreach (byte x in data)
             {
                 checksum += x;
             }
-            byte checksumLo = (byte)(checksum & 0xFF);
-            byte checksumHi = (byte)((checksum >> 8) & 0xFF);
+            byte checksumLo = (byte) (checksum & 0xFF);
+            byte checksumHi = (byte) ((checksum >> 8) & 0xFF);
 
             // Checksum: High byte first as per spec
-            byte[] finalData = data.Concat(new byte[] { checksumHi, checksumLo }).ToArray();
+            byte[] finalData = data.Concat(new byte[] {checksumHi, checksumLo}).ToArray();
             port.Write(finalData, 0, finalData.Length);
 
             var response = readResponse();
@@ -368,19 +347,19 @@ namespace sat_comms
         public byte[] ReadMessageData()
         {
             issueExtendedATCommand("RB", ExtendedCommandGroups.ShortBurstData);
-            byte lf1 = (byte)port.ReadByte(); // LF
+            byte lf1 = (byte) port.ReadByte(); // LF
             Console.Write(lf1.ToString("X2") + " ");
             for (int i = 0; i < "AT+SBDRB".Length; i++)
             {
                 Console.Write(port.ReadByte().ToString("X2") + " ");
             }
-            byte cr = (byte)port.ReadByte(); // CR
-            byte lf2 = (byte)port.ReadByte(); // LF
+            byte cr = (byte) port.ReadByte(); // CR
+            byte lf2 = (byte) port.ReadByte(); // LF
             Console.Write(cr.ToString("X2") + " ");
             Console.Write(lf2.ToString("X2") + " ");
 
-            byte lenByte1 = (byte)port.ReadByte();
-            byte lenByte2 = (byte)port.ReadByte();
+            byte lenByte1 = (byte) port.ReadByte();
+            byte lenByte2 = (byte) port.ReadByte();
             Console.Write(lenByte1.ToString("X2") + " ");
             Console.Write(lenByte2.ToString("X2") + " ");
 
@@ -389,7 +368,7 @@ namespace sat_comms
             int ownChecksum = 0;
             for (int i = 0; i < length; i++)
             {
-                data[i] = (byte)port.ReadByte();
+                data[i] = (byte) port.ReadByte();
                 Console.Write(data[i].ToString("X2") + " ");
                 ownChecksum += data[i];
             }
@@ -460,7 +439,7 @@ namespace sat_comms
                 ThrowFailedResponse("Failed to clear mobile buffers.", response);
             }
         }
-        
+
         public void Configure()
         {
             EchoEnable = true;
@@ -487,13 +466,18 @@ namespace sat_comms
 
         public bool HasSignal
         {
-            get
-            {
-                return SignalQuality > 0;
-            }
+            get { return SignalQuality > 0; }
         }
 
-        public Tuple<string, bool, bool, int> SendAndReceiveMessage(string messageToSend = null)
+        public class ISUResult
+        {
+            public string Message { get; set; }
+            public bool ReceiveSuccessful { get; set; }
+            public bool SendSuccessful { get; set; }
+            public int MessagesRemaining { get; set; }
+        }
+
+        public ISUResult SendAndReceiveMessage(string messageToSend = null)
         {
             ClearMobileBuffers();
 
@@ -524,7 +508,13 @@ namespace sat_comms
                 byte[] data = ReadMessageData();
                 messageReceived = Encoding.ASCII.GetString(data);
             }
-            return new Tuple<string, bool, bool, int>(messageReceived, receiveOK, sendOK, status.Item6);
+            return new ISUResult
+            {
+                Message = messageReceived,
+                ReceiveSuccessful = receiveOK,
+                SendSuccessful = sendOK,
+                MessagesRemaining = status.Item6
+            };
         }
     }
 }
