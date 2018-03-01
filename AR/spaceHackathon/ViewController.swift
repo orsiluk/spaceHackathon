@@ -27,6 +27,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var loadcar: Bool = true
     var carObject = SCNNode()
     var angle : Float = 0.0
+    var counter: Int = 0
     
     lazy var statusViewController: StatusViewController = {
         return childViewControllers.lazy.flatMap({ $0 as? StatusViewController }).first!
@@ -53,29 +54,98 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         statusViewController.restartExperienceHandler = { [unowned self] in
             print("Done pressed")
             self.visualisePath()
-            let myUrl = URL(string:"http://2ba35d57.ngrok.io/api/Commands/Issue/")!
-//            let postString = "id=13&CommandType=Forward&Data=payload test"
+            self.postPath()
             
-            let json: [String: Any] = ["id": "13",
-                                       "CommandType": "Forward",
-                                       "Data": "payload test" ]
-            
-            let jsonData = try? JSONSerialization.data(withJSONObject: json)
-            
-//            request.httpBody = postString.data(using: .utf8)
+//            self.postToServer(id: <#T##Float#>, commandType: <#T##String#>, distance: <#T##Float#>, angle: <#T##Float#>)
+//            let myUrl = URL(string:"http://2ba35d57.ngrok.io/api/Commands/Issue/")!
+////            let postString = "id=13&CommandType=Forward&Data=payload test"
+//
+//            let json: [String: Any] = ["id": "13",
+//                                       "CommandType": "Forward",
+//                                       "Data": "payload test" ]
+//
+//            let jsonData = try? JSONSerialization.data(withJSONObject: json)
+//
+////            request.httpBody = postString.data(using: .utf8)
+//
+//// ---------- Requests
+//            var request = URLRequest(url: myUrl)
+////            request.httpBody = postString.data(using: .utf8)
+//            request.httpBody = jsonData
+//            request.httpMethod = "POST"
+//            let (_, _, error) = URLSession.shared.synchronousDataTask(urlrequest: request)
+//            if let error = error {
+//                print("Synchronous task ended with error: \(error)")
+//            }
+//            else {
+//                print("Synchronous task ended without errors.")
+//            }
+        }
 
-// ---------- Requests
-            var request = URLRequest(url: myUrl)
-//            request.httpBody = postString.data(using: .utf8)
-            request.httpBody = jsonData
-            request.httpMethod = "POST"
-            let (_, _, error) = URLSession.shared.synchronousDataTask(urlrequest: request)
-            if let error = error {
-                print("Synchronous task ended with error: \(error)")
-            }
-            else {
-                print("Synchronous task ended without errors.")
-            }
+    }
+    
+    func postToServer(id:Int,commandType:String,value:Float){
+        let myUrl = URL(string:"http://openppr.eu.ngrok.io/api/Commands/Issue/")!
+        
+//        let command: [String: Any] = ["Id": String(id),
+//                                   "CommandType": commandType,
+//                                   "Data": String(value) ]
+//
+//        let jsonCommand = try? JSONSerialization.data(withJSONObject: command)
+        let parameters = ["Id": String(id), "CommandType": commandType, "Data": String(value)] as Dictionary<String, String>
+
+//        let data = "{\"Id\":\(id),\"CommandType\":\"\(commandType)\",\"Data\":\"\(value)\"}"
+        
+//        print(data)
+//        // Requests
+        var request = URLRequest(url: myUrl)
+//        let jsonCommand = try? JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+        
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+
+//        // request.httpBody = postString.data(using: .utf8)
+//        request.httpBody = jsonCommand
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        request.httpMethod = "POST"
+        
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        let (_, _, error) = URLSession.shared.synchronousDataTask(urlrequest: request)
+        if let error = error {
+            print("Synchronous task ended with error: \(error)")
+        }
+        else {
+            
+            print("Synchronous task ended without errors.")
+        }
+    }
+    
+    func postPath(){
+        let pointCount = pointList.count
+        
+        for index in 1...pointCount-1{
+            
+            print("Posting item: ")
+            print(index)
+            
+            let angle = calculateAngle(pos1: pointList[index], pos2: pointList[index-1])
+            let distance = getDistance(pos1: pointList[index], pos2: pointList[index-1])
+            
+            let degrees = angle * 180/Float.pi
+            self.postToServer(id: counter, commandType: "Right", value: degrees)
+            counter = counter+1
+            self.postToServer(id: counter, commandType: "Forward", value: Float(distance*100))
+            counter = counter+1
+            
+            
+            
         }
     }
     
@@ -165,14 +235,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     
     
-    func executePath(pointList: [SCNVector3]){
-        
-        let pointCount = pointList.count
-        
-        for index in 0...pointCount-1{
-            //executeStage(pos1: pointList[index], pos2: pointList[index+1])
-        }
-    }
+//    func executePath(pointList: [SCNVector3]){
+//
+//        let pointCount = pointList.count
+//
+//        for index in 0...pointCount-1{
+//            //executeStage(pos1: pointList[index], pos2: pointList[index+1])
+//        }
+//    }
     
     func visualisePath(){
         
@@ -209,7 +279,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
 
     func addLine(pos1:SCNVector3,pos2:SCNVector3) -> SCNNode {
-        let lineLength = calcPositions(pos1: pos1, pos2: pos2)
+        let lineLength = getDistance(pos1: pos1, pos2: pos2)
         let midPoint = findMidPoint(pos1: pos1, pos2: pos2)
 
         let line = SCNCylinder(radius: 0.005, height: lineLength)
@@ -225,7 +295,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     }
     
-    func calcPositions(pos1:SCNVector3,pos2:SCNVector3) -> CGFloat{
+    func getDistance(pos1:SCNVector3,pos2:SCNVector3) -> CGFloat{
 
         print("Position1:",pos1)
         print("Position2:",pos2)
