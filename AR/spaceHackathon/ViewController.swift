@@ -53,6 +53,29 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         statusViewController.restartExperienceHandler = { [unowned self] in
             print("Done pressed")
             self.visualisePath()
+            let myUrl = URL(string:"http://2ba35d57.ngrok.io/api/Commands/Issue/")!
+//            let postString = "id=13&CommandType=Forward&Data=payload test"
+            
+            let json: [String: Any] = ["id": "13",
+                                       "CommandType": "Forward",
+                                       "Data": "payload test" ]
+            
+            let jsonData = try? JSONSerialization.data(withJSONObject: json)
+            
+//            request.httpBody = postString.data(using: .utf8)
+
+// ---------- Requests
+            var request = URLRequest(url: myUrl)
+//            request.httpBody = postString.data(using: .utf8)
+            request.httpBody = jsonData
+            request.httpMethod = "POST"
+            let (_, _, error) = URLSession.shared.synchronousDataTask(urlrequest: request)
+            if let error = error {
+                print("Synchronous task ended with error: \(error)")
+            }
+            else {
+                print("Synchronous task ended without errors.")
+            }
         }
     }
     
@@ -113,8 +136,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             self.sceneView.scene.rootNode.addChildNode(boxNode)
             
             pointList.append(boxNode.position)
-        
-            
 
         }
         
@@ -163,7 +184,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         for index in 1...pointCount-1{
             
-            print("Vis path")
+            print("Visualize path")
             print(index)
             
             let angle = calculateAngle(pos1: pointList[index], pos2: pointList[index-1])
@@ -186,9 +207,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         carObject.runAction(animSequence)
     }
-    
-    
-    
+
     func addLine(pos1:SCNVector3,pos2:SCNVector3) -> SCNNode {
         let lineLength = calcPositions(pos1: pos1, pos2: pos2)
         let midPoint = findMidPoint(pos1: pos1, pos2: pos2)
@@ -225,24 +244,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let zLen = (pos1.z + pos2.z)/2
         return SCNVector3Make(xLen,yLen,zLen)
     }
-    
-//    func addCircle(hitResult: ARHitTestResult) {
-//        print("add the circle")
-//        let circle = SCNSphere(radius: 0.1)
-//        let node = SCNNode(geometry: circle)
-//        // create material
-//        let material = SCNMaterial()
-//        material.diffuse.contents = UIColor.blue
-//
-//        // create SCNNode
-//        node.geometry?.materials = [material]
-//        node.position = SCNVector3Make(0, -0.1, -0.8)
-//
-//        //        boxNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.dynamic, shape: SCNPhysicsShape(geometry: box, options: nil))
-//
-//        node.position = SCNVector3Make(hitResult.worldTransform.columns.3.x, hitResult.worldTransform.columns.3.y + Float(circle.radius) + Float(1), hitResult.worldTransform.columns.3.z)
-//        self.sceneView.scene.rootNode.addChildNode(node)
-//    }
     
     func createPlaneNode(anchor: ARPlaneAnchor) -> SCNNode {
         
@@ -345,15 +346,38 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
 }
 
+//extension URLSession {
+//    func synchronousDataTask(with url: URL) -> (Data?, URLResponse?, Error?) {
+//        var data: Data?
+//        var response: URLResponse?
+//        var error: Error?
+//
+//        let semaphore = DispatchSemaphore(value: 0)
+//
+//        let dataTask = self.dataTask(with: url) {
+//            data = $0
+//            response = $1
+//            error = $2
+//
+//            semaphore.signal()
+//        }
+//        dataTask.resume()
+//
+//        _ = semaphore.wait(timeout: .distantFuture)
+//
+//        return (data, response, error)
+//    }
+//}
+
 extension URLSession {
-    func synchronousDataTask(with url: URL) -> (Data?, URLResponse?, Error?) {
+    func synchronousDataTask(urlrequest: URLRequest) -> (data: Data?, response: URLResponse?, error: Error?) {
         var data: Data?
         var response: URLResponse?
         var error: Error?
         
         let semaphore = DispatchSemaphore(value: 0)
         
-        let dataTask = self.dataTask(with: url) {
+        let dataTask = self.dataTask(with: urlrequest) {
             data = $0
             response = $1
             error = $2
@@ -367,3 +391,4 @@ extension URLSession {
         return (data, response, error)
     }
 }
+
