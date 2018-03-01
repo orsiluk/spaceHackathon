@@ -86,7 +86,7 @@ namespace RoverServer.Controllers
             commandList.Add(command);
             JobManager.AddJob(() =>
             {
-                if (Robot.Mode == Robot.CommsMode.NXT)
+                if (Robot.Mode == RobotLib.Robot.CommsMode.NXT)
                 {
                     telemetry.TrackEvent("Sending message to NXT");
                     Robot.HandleCommand(command);
@@ -119,8 +119,8 @@ namespace RoverServer.Controllers
         public IHttpActionResult Issue([FromBody] Command value)
         {
             return IssueCommand(value)
-                ? Content(HttpStatusCode.OK, $"Successfully issue command {value.Id}")
-                : Content(HttpStatusCode.BadRequest, "Failed to issue command");
+                ? Content(HttpStatusCode.OK, $"Successfully issue command {value.Id}:{value.CommandType}:{value.Data}")
+                : Content(HttpStatusCode.BadRequest, $"Failed to issue command {value.Id}:{value.CommandType}:{value.Data}");
         }
 
         [HttpDelete]

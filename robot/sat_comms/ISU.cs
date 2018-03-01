@@ -7,7 +7,41 @@ using System.IO.Ports;
 
 namespace sat_comms
 {
-    class ISU : IDisposable
+    interface IISU : IDisposable
+    {
+        ISU.ISUResult SendAndReceiveMessage(string messageToSend = null);
+        void Configure();
+        void PrintDeviceInfo();
+        void PrintSignalQuality();
+    }
+
+    class MockISU : IISU
+    {
+        public void Dispose()
+        {
+        }
+
+        public ISU.ISUResult SendAndReceiveMessage(string messageToSend = null)
+        {
+            return new ISU.ISUResult { Message = "B0:FORWARD:10", MessagesRemaining = 0, SendSuccessful = false, ReceiveSuccessful = true };
+        }
+
+        public void Configure()
+        {
+        }
+
+        public void PrintDeviceInfo()
+        {
+            Console.WriteLine("Mock ISU device");
+        }
+
+        public void PrintSignalQuality()
+        {
+            Console.WriteLine("Over 9000 signal");
+        }
+    }
+
+    class ISU : IISU
     {
         private SerialPort port;
 
