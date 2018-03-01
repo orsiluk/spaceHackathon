@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web.Http;
 using NSwag.SwaggerGeneration.WebApi;
 using RoverServer.Controllers;
+using RoverServer.Filters;
 using RoverServer.RockBlock;
 
 //using RoverServer.RockBlock;
@@ -41,6 +42,7 @@ namespace RoverServer
 
             config.Formatters.XmlFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("multipart/form-data"));
 
+            config.Filters.Add(new InterceptorFilter());
             Robot.Init();
         }
     }

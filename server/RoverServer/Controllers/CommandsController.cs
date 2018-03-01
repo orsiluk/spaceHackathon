@@ -10,6 +10,7 @@ using System.Web.Http.Results;
 using FluentScheduler;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using RoverServer.Filters;
 using RoverServer.RockBlock;
 
 namespace RoverServer.Controllers
@@ -48,6 +49,7 @@ namespace RoverServer.Controllers
         }
     }
 
+    [InterceptorFilter]
     public class CommandsController : ApiController
     {
         private IRockBlockClient GetRockBlockClient()
