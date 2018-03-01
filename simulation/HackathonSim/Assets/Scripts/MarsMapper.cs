@@ -49,7 +49,7 @@ public class MarsMapper : MonoBehaviour
 		yield return www.SendWebRequest();
 		downloaded_tiles.Add(coords);
 		Texture2D texture = DownloadHandlerTexture.GetContent(www);
-		Texture2D bumpTexture = getGreyscale(texture);
+		//Texture2D bumpTexture = getGreyscale(texture);
 		GameObject tile = GameObject.CreatePrimitive(PrimitiveType.Plane);
 		tile.transform.position = new Vector3(coords.x*10, 0, coords.y*10);
 		tile.transform.Rotate(new Vector3(0,90,0));
@@ -57,7 +57,7 @@ public class MarsMapper : MonoBehaviour
 		Renderer rend = tile.GetComponent<Renderer>();
 		rend.material = new Material(tileShader);
 		rend.material.mainTexture = texture;
-		rend.material.SetTexture("_ParallaxMap", bumpTexture);
+		//rend.material.SetTexture("_ParallaxMap", bumpTexture);
 	}
 
 	public Texture2D getGreyscale(Texture2D color)
@@ -75,7 +75,6 @@ public class MarsMapper : MonoBehaviour
 				bumpTexture.SetPixel(x,y, new Color(lum,lum,lum));
 			}
 		}
-		Debug.Log(max);
 
 		return bumpTexture;
 	}

@@ -12,7 +12,7 @@ public class Communicator : MonoBehaviour {
 		RobotCommand command = new RobotCommand();
 		command.Id = counter;
 		counter++;
-		command.Data = String.Format("{0}", distance);
+		command.Data = String.Format("{0}", (int)distance);
 		command.CommandType = "Forward";
 		string json = JsonUtility.ToJson(command);
 		postJSON(json);
@@ -23,8 +23,15 @@ public class Communicator : MonoBehaviour {
 		RobotCommand command = new RobotCommand();
 		command.Id = counter;
 		counter++;
-		command.Data = String.Format("{0}", angle);
-		command.CommandType = "Turn";
+		command.Data = String.Format("{0}", (int)angle);
+		if (angle > 0)
+		{
+			command.CommandType = "Right";
+		}
+		else
+		{
+			command.CommandType = "Left";
+		}
 		string json = JsonUtility.ToJson(command);
 		postJSON(json);
 	}

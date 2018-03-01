@@ -41,14 +41,20 @@ public class MouseController : MonoBehaviour
 	IEnumerator buildPath()
 	{
 		List<Vector3> currentPath = new List<Vector3>();
+		Vector3 lastPoint = Rover.transform.position;
 		while (Input.GetButton("Fire1"))
 		{
 			try
 			{
 				Vector3 point = createPathPoint();
-				currentPath.Add(point + Vector3.up * 0.1f);
-				PathLine.positionCount = currentPath.Count;
-				PathLine.SetPositions(currentPath.ToArray());
+				if (Vector3.Distance(point, lastPoint) > 8)
+				{
+					currentPath.Add(point + Vector3.up * 0.1f);
+					PathLine.positionCount = currentPath.Count;
+					PathLine.SetPositions(currentPath.ToArray());
+					lastPoint = point;
+				}
+
 			}
 			catch (Exception e)
 			{
