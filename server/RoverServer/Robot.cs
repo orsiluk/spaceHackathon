@@ -29,7 +29,6 @@ namespace RoverServer
 
         public static void HandleCommand(RoverServer.Controllers.Command command)
         {
-            // TODO
             int data = int.Parse(command.Data);
             switch (command.CommandType)
             {

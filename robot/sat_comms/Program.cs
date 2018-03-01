@@ -79,13 +79,14 @@ namespace sat_comms
                 _isu.Configure();
                 _isu.PrintDeviceInfo();
                 _isu.PrintSignalQuality();
+                _isu.SetNextMessageToSend(RobotLib.Robot.Name);
 
                 Console.WriteLine("Starting Main Loop:");
 
                 while (_running)
                 {
-                    Thread.Sleep(10000);
                     CheckMessages();
+                    Thread.Sleep(10000);
                 }
             }).Start();
         }

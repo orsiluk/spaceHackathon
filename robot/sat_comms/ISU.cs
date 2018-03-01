@@ -13,6 +13,7 @@ namespace sat_comms
         void Configure();
         void PrintDeviceInfo();
         void PrintSignalQuality();
+        void SetNextMessageToSend(string value);
     }
 
     class MockISU : IISU
@@ -38,6 +39,11 @@ namespace sat_comms
         public void PrintSignalQuality()
         {
             Console.WriteLine("Over 9000 signal");
+        }
+
+        public void SetNextMessageToSend(string value)
+        {
+            // Do nothing
         }
     }
 
@@ -511,6 +517,12 @@ namespace sat_comms
             public int MessagesRemaining { get; set; }
         }
 
+        private string nextMessageToSend = null;
+        public void SetNextMessageToSend(string value)
+        {
+            nextMessageToSend = value;
+        }
+
         public ISUResult SendAndReceiveMessage(string messageToSend = null)
         {
             ClearMobileBuffers();
@@ -518,6 +530,12 @@ namespace sat_comms
             if (!HasSignal)
             {
                 throw new Exception("No signal.");
+            }
+
+            if (messageToSend == null)
+            {
+                messageToSend = nextMessageToSend;
+                nextMessageToSend = null;
             }
 
             if (messageToSend != null)
