@@ -12,50 +12,42 @@ namespace robot_test_console
     {
         static void Main(string[] args)
         {
-            // Create a NXT brick,
-            // and use USB to communicate with it.
-            NxtBrick brick = new NxtBrick(NxtCommLinkType.USB, 0);
+            RobotLib.Robot.Init();
 
-            // Attach motors to port B and C on the NXT.
-            brick.MotorB = new NxtMotor();
-            brick.MotorC = new NxtMotor();
-            
-            // Syncronize the two motors.
-            NxtMotorSync motorPair = new NxtMotorSync(brick.MotorB, brick.MotorC);
-
-            brick.Connect();
-
-            // Query the device info, and write out the NXT's name.
-            Console.WriteLine("NXT name: {0}", brick.Name);
-
-            Console.WriteLine("Running motors B and C...");
-
-            //brick.MotorB.Run(50, 360);
-
-            // Run them at 75% power, for a 3600 degree run.
-            while (true)
+            if (RobotLib.Robot.Mode != RobotLib.Robot.CommsMode.NXT)
             {
-                motorPair.Run(100, 3600, -100);
-                Console.WriteLine("Running...");
-
-                // Wait 8 seconds before putting the motors into idle-mode.
-                System.Threading.Thread.Sleep(7 * 1000);
-                motorPair.Run(100, 10, 0);
-                System.Threading.Thread.Sleep(200);
-                motorPair.Idle();
-                System.Threading.Thread.Sleep(200);
+                Console.WriteLine("Robot not connected. Is it plugged in?");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
             }
+            
+            // Query the device info, and write out the NXT's name.
+            Console.WriteLine("NXT name: {0}", RobotLib.Robot.Name);
 
-            brick.MotorB.Idle();
-            brick.MotorC.Idle();
-            //motorPair.Idle();
+            Console.WriteLine("Running...");
 
-            Console.WriteLine("Done.");
+            do
+            {
+                //Console.WriteLine("Drive 1cm");
+                //RobotLib.Robot.DriveForward(1);
 
-            // Disconnect from the NXT.
-            brick.Disconnect();
+                //Console.WriteLine("Drive 2cm");
+                //RobotLib.Robot.DriveForward(2);
 
-            Console.ReadLine();
+                //Console.WriteLine("Drive 4cm");
+                //RobotLib.Robot.DriveForward(4);
+
+                Console.WriteLine("Drive 8cm");
+                RobotLib.Robot.DriveForward(8);
+
+                //Console.WriteLine("Drive 16cm");
+                //RobotLib.Robot.DriveForward(16);
+
+                Console.WriteLine("Press Q to quit or any other key to repeat the test.");
+            }
+            while (Console.ReadKey().Key != ConsoleKey.Q);
+
+            RobotLib.Robot.Cleanup();
         }
     }
 }

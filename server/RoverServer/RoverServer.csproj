@@ -432,6 +432,10 @@
       <Project>{40c6e946-d5ac-43b8-aede-d896e9cbb3e2}</Project>
       <Name>WinUsbWrapper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\robot\robot_test_console\robot_test_console\robot_test_console.csproj">
+      <Project>{5c0f00ac-88fb-41d8-9541-032b8a9bc899}</Project>
+      <Name>robot_test_console</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\robot\sat_comms\sat_comms.csproj">
       <Project>{a301c8e8-e3eb-482c-882e-5b274395fed5}</Project>
       <Name>sat_comms</Name>
