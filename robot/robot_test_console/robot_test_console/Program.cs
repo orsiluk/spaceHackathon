@@ -37,11 +37,35 @@ namespace robot_test_console
                 //Console.WriteLine("Drive 4cm");
                 //RobotLib.Robot.DriveForward(4);
 
-                Console.WriteLine("Drive 8cm");
-                RobotLib.Robot.DriveForward(8);
+                //Console.WriteLine("Drive 8cm");
+                //RobotLib.Robot.DriveForward(8);
 
                 //Console.WriteLine("Drive 16cm");
                 //RobotLib.Robot.DriveForward(16);
+
+                //Console.WriteLine("Drive 15 degrees");
+                //RobotLib.Robot.DriveLeft(15);
+
+                Console.WriteLine("Drive 30 degrees");
+                RobotLib.Robot.DriveLeft(30);
+
+                Console.WriteLine("Drive 45 degrees");
+                RobotLib.Robot.DriveRight(45);
+
+                Console.WriteLine("Drive 60 degrees");
+                RobotLib.Robot.DriveLeft(60);
+
+                Console.WriteLine("Drive 90 degrees");
+                RobotLib.Robot.DriveLeft(90);
+
+                Console.WriteLine("Drive 120 degrees");
+                RobotLib.Robot.DriveLeft(120);
+
+                Console.WriteLine("Drive 180 degrees");
+                RobotLib.Robot.DriveRight(180);
+
+                Console.WriteLine("Drive 360 degrees");
+                RobotLib.Robot.DriveLeft(360);
 
                 Console.WriteLine("Press Q to quit or any other key to repeat the test.");
             }

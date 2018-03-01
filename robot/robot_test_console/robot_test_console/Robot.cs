@@ -82,14 +82,18 @@ namespace RobotLib
 
         public static void DriveLeft(int degrees)
         {
-            // TODO: Distance per degree of turn of wheels -> degrees requested -> some actual number of degrees to turn
-            motorPair.Run(100, 360, 100);
+            motorPair.Run(100, (ushort)(5 * degrees), 100);
+            System.Threading.Thread.Sleep(degrees * 10 + 500);
+
+            ResetPosition();
         }
 
         public static void DriveRight(int degrees)
         {
-            // TODO: Distance per degree of turn of wheels -> degrees requested -> some actual number of degrees to turn
-            motorPair.Run(100, 360, -100);
+            motorPair.Run(100, (ushort)(5 * degrees), -100);
+            System.Threading.Thread.Sleep(degrees * 10 + 500);
+
+            ResetPosition();
         }
     }
 }
