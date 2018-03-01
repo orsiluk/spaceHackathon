@@ -106,16 +106,22 @@ namespace RoverServer.Controllers
             return true;
         }
 
-        // GET api/commands/getall
+        // GET api/commands/GetAll
         public JsonResult<List<Command>> GetAll()
         {
             return Json(GetCommands());
         }
 
-        // GET api/commands/5
-        public JsonResult<Command> Get(int id)
+        // GET api/commands/GetById/5
+        public JsonResult<Command> GetById(int id)
         {
             return Json(GetCommands().FirstOrDefault(cmd => cmd.Id == id));
+        }
+
+        // GET api/commands/GetByAutomaticId/5
+        public JsonResult<Command> GetByAutomaticId(int id)
+        {
+            return Json(GetCommands().FirstOrDefault(cmd => cmd.AutomaticId == id));
         }
 
         // POST api/commands/issue
