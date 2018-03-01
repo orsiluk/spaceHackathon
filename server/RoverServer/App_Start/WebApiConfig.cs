@@ -38,6 +38,7 @@ namespace RoverServer
                     ConfigurationManager.AppSettings["rockblockPassword"]));*/
             config.Properties.TryAdd("RockBlockClient", new MockRockBlockClient());
             config.Properties.TryAdd("CommandList", new List<Command>());
+            config.Properties.TryAdd("CommandQueue", new ConcurrentQueue<Command>());
             config.Properties.TryAdd("MessageId", 0);
 
             config.Formatters.XmlFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("multipart/form-data"));

@@ -64,6 +64,12 @@ namespace RoverServer.Controllers
             return (List<Command>) commands;
         }
 
+        private ConcurrentQueue<Command> GetCommandQueue()
+        {
+            GlobalConfiguration.Configuration.Properties.TryGetValue("CommandQueue", out object commands);
+            return (ConcurrentQueue<Command>) commands;
+        }
+
         private void ResetCommands()
         {
             GlobalConfiguration.Configuration.Properties.TryGetValue("CommandList", out object objCommands);
@@ -88,22 +94,9 @@ namespace RoverServer.Controllers
                 return false;
             }
 
-            commandList.Add(command);
-
-            JobManager.AddJob(() =>
-            {
-                if (Robot.Mode == RobotLib.Robot.CommsMode.NXT)
-                {
-                    telemetry.TrackEvent("Sending message to NXT");
-                    Robot.HandleCommand(command);
-                }
-                else
-                {
-                    telemetry.TrackEvent("Sending message to RockBlock");
-                    var response = GetRockBlockClient().SendCommand(command);
-                    telemetry.TrackEvent($"Response from RockBlock: {response}");
-                }
-            }, (s) => s.ToRunOnceIn(0).Seconds());
+            //commandList.Add(command);
+            var commandQueue = GetCommandQueue();
+            commandQueue.Enqueue(command);
 
             return true;
         }
