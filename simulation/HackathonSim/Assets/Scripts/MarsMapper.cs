@@ -79,4 +79,11 @@ public class MarsMapper : MonoBehaviour
 
 		return bumpTexture;
 	}
+	
+	public static void SphericalToCartesian(float radius, float polar, float elevation, out Vector3 outCart){
+		float a = radius * Mathf.Cos(elevation);
+		outCart.x = a * Mathf.Cos(polar);
+		outCart.y = radius * Mathf.Sin(elevation);
+		outCart.z = a * Mathf.Sin(polar);
+	}
 }

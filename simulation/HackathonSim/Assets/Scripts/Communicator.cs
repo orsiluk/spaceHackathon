@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Communicator : MonoBehaviour {
-	private static readonly string robo_api = "http://9fe64d44.ngrok.io/api/Commands/Issue";
+	private static readonly string robo_api = "http://openppr.eu.ngrok.io/api/Commands/Issue";
 	private int counter = 0;
 	
 	public void sendMove(float distance)
